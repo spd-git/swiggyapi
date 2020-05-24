@@ -1,0 +1,2110 @@
+openapi: 3.0.0
+tags:
+  - name: 01 API
+    description: All APIs
+  - name: Custom Input Fields
+    description: All swiggy specific custom input fields
+  - name: Custom State As Input Field
+    description: All swiggy specific custom states as input fields
+  - name: Generic Input Fields
+    description: All client agnostic input fields supported by external form
+info:
+  title: Swiggy Inbound Leads API
+  description: |-
+    Inbound leads update api and External form API and Input field schema
+
+    PRD: https://teamvymo.atlassian.net/wiki/spaces/PROD/pages/1014464622/Swiggy+AOB+learnings
+
+    Tech Doc WIP:
+    https://docs.google.com/document/d/1iNwiCwg_EwADbm3OkInJ-4fKr_Squ_j-7_FoEPs8I0k/
+  contact:
+    name: Sudeep Patil
+    email: sudeep@getvymo.com
+  version: 0.0.5
+servers:
+  - url: 'https://swiggy.lms.getvymo.com'
+    description: Production server
+  - url: 'https://staging.lms.getvymo.com'
+    description: Staging server
+  - url: 'http://localhost:3002'
+    description: Local server
+paths:
+  /onboarding/swiggy/getform:
+    get:
+      summary: 01 Get Default external form or Landing page.
+      description: Optional extended description in Markdown.
+      operationId: getDefaultForm
+      responses:
+        '200':
+          description: Success with existing forms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_form_response'
+              examples:
+                Default:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_config:
+                        progress:
+                          - name: Restaurant Details
+                            first_field: name
+                            code: inbound_leads_new
+                          - name: FSSAI Details
+                            first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+                            code: 3bh2sd2q1m
+                          - name: Commision and Onboarding
+                            first_field: sifg_commissionaccep_m621ytkcy
+                            code: mhbpo296q
+                          - name: Owner/Manager Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            end_field:
+                              - sifg_whatisyourprefe_xcomh99ll
+                              - asdasdasd
+                              - soem_other_field
+                            code: mhbpo296q
+                          - name: Location Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            code: rkoh733z9q
+                    inputs:
+                      - type: swiggy_welcome_screen
+                      - type: label
+                        code: new_inbound_header
+                        value: Please fill the following details
+                        read_only: false
+                        meta:
+                          style:
+                            type: heading
+                            background_color: x00000000
+                            hidden: false
+                      - type: text
+                        code: name
+                        hint: Name
+                        required: true
+                        parent_code: null
+                        tags:
+                          - name
+                          - name
+                        read_only: false
+                      - type: dropdown
+                        code: city
+                        hint: City
+                      - type: text
+                        code: owner_phone
+                        hint: Enter Owner Number
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/sendOtp
+                          params:
+                            - code: phone
+                              name: owner_phone
+                            - code: rest_name
+                              name: name
+                        read_only: false
+                      - type: text
+                        code: verify_owner_otp
+                        hint: Verify Owner Number OTP
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validateOtp
+                          params:
+                            - code: owner_phone
+                              name: owner_phone
+                            - code: otp_info
+                              name: otp_info
+                            - code: otp
+                              name: verify_owner_otp
+                        read_only: false
+                      - type: state_update_button
+                        code: inbound_leads_new
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+      tags:
+        - 01 API
+  '/onboarding/swiggy/getform/{ref_id}':
+    get:
+      summary: 02 Get an existing form based on reference ID
+      operationId: getFormByRefId
+      description: RefId is unique identifier alternate of leadId
+      parameters:
+        - name: ref_id
+          description: The Reference Id of the form.
+          in: path
+          required: true
+          schema:
+            type: integer
+            minLength: 8
+      responses:
+        '200':
+          description: Successfully found existing inbound lead
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_form_response'
+              examples:
+                Existing Form Return - FSSAI Pending:
+                  value:
+                    result: success
+                    identifier:
+                      code: lxft123j
+                      ref_id: '10004404'
+                    meta:
+                      progress_bar_code: 3bh2sd2q1m
+                      progress_bar_config:
+                        progress:
+                          - name: Restaurant Details
+                            first_field: name
+                            code: inbound_leads_new
+                          - name: FSSAI Details
+                            first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+                            code: 3bh2sd2q1m
+                          - name: Commision and Onboarding
+                            first_field: sifg_commissionaccep_m621ytkcy
+                            code: mhbpo296q
+                          - name: Owner/Manager Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            end_field:
+                              - sifg_whatisyourprefe_xcomh99ll
+                              - asdasdasd
+                              - soem_other_field
+                            code: mhbpo296q
+                          - name: Location Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            code: rkoh733z9q
+                    inputs:
+                      - type: text
+                        code: name
+                        hint: Name
+                        required: true
+                        parent_code: null
+                        value: Pizza Hut
+                        tags:
+                          - name
+                          - name
+                        read_only: false
+                      - type: number
+                        code: referenceid_1w5f8tjs2
+                        hint: Reference ID
+                        required: true
+                        value: '10004404'
+                        parent_code: null
+                        read_only: true
+                      - type: text
+                        code: owner_phone
+                        hint: Enter Owner Number
+                        required: true
+                        parent_code: null
+                        value: '7276510345'
+                        oif_options:
+                          url: /swiggy/sendOtp
+                          params:
+                            - code: phone
+                              name: owner_phone
+                            - code: rest_name
+                              name: name
+                        read_only: true
+                      - type: text
+                        code: verify_owner_otp
+                        hint: Verify Owner Number OTP
+                        required: true
+                        parent_code: null
+                        value: '******'
+                        oif_options:
+                          url: /swiggy/validateOtp
+                          params:
+                            - code: owner_phone
+                              name: owner_phone
+                            - code: otp_info
+                              name: otp_info
+                            - code: otp
+                              name: verify_owner_otp
+                        read_only: true
+                      - type: sifg
+                        code: sifg_doyouhaveavalid_wcnpnu7m7w
+                        required: true
+                        hint: Do you Have a valid FSSAI Registration/License?
+                        parent_code: null
+                        value: 'yes'
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouhaveavalid_wcnpnu7m7w
+                            hint: Do you Have a valid FSSAI Registration/License?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            'yes':
+                              - type: number
+                                code: fssailicensenum_20h4l1wcz
+                                hint: FSSAI Registration or License Number
+                                required: true
+                                parent_code: null
+                                value: '123456789012'
+                                read_only: true
+                              - type: date
+                                code: fssaiexpirydate_rvu4juhzte
+                                hint: FSSAI Expiration Date
+                                value: '15670123410'
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: true
+                            'no':
+                              - type: number
+                                code: enteryourfssaia_7lz90xk4le
+                                hint: 'Enter your FSSAI Acknowlegement number*'
+                                required: true
+                                min_chars: 17
+                                max_chars: 17
+                                parent_code: null
+                                read_only: true
+                              - type: date
+                                code: dateofapplicati_f0vhhqmtfh
+                                hint: Date of Application
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: true
+                        oif_options: null
+                        read_only: true
+                      - type: commsion_state
+                        value: 'Please note 25% commission...'
+                        meta:
+                          show_fssai: true
+                          show_warning: true
+                          inputs:
+                            acceptable: sifg_commissionaccep_m621ytkcy
+                            reasons: reasonsforcommi_npnn8imqj
+                            remarks: customremarks_x2hjy23ood
+                      - type: state_update_button
+                        code: 3bh2sd2q1m
+                        value: Proceed
+                        url: /swiggy/updatestate
+                        editable_inputs:
+                          - commsion_state
+                    editable_fields:
+                      - name
+                Existing Form Return - Commission Pending:
+                  value:
+                    result: success
+                    identifier:
+                      code: lxft123j
+                      ref_id: '10004404'
+                    meta:
+                      progress_bar_code: 3bh2sd2q1m
+                      progress_bar_config:
+                        progress:
+                          - name: Restaurant Details
+                            first_field: name
+                            code: inbound_leads_new
+                          - name: FSSAI Details
+                            first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+                            code: 3bh2sd2q1m
+                          - name: Commision and Onboarding
+                            first_field: sifg_commissionaccep_m621ytkcy
+                            code: mhbpo296q
+                          - name: Owner/Manager Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            end_field:
+                              - sifg_whatisyourprefe_xcomh99ll
+                              - asdasdasd
+                              - soem_other_field
+                            code: mhbpo296q
+                          - name: Location Details
+                            first_field: restaurantaddre_oh2hhfv348
+                            code: rkoh733z9q
+                    inputs:
+                      - type: text
+                        code: name
+                        hint: Name
+                        required: true
+                        parent_code: null
+                        value: Pizza Hut
+                        tags:
+                          - name
+                          - name
+                        read_only: false
+                      - type: number
+                        code: referenceid_1w5f8tjs2
+                        hint: Reference ID
+                        required: true
+                        value: '10004404'
+                        parent_code: null
+                        read_only: true
+                      - type: text
+                        code: owner_phone
+                        hint: Enter Owner Number
+                        required: true
+                        parent_code: null
+                        value: '7276510345'
+                        oif_options:
+                          url: /swiggy/sendOtp
+                          params:
+                            - code: phone
+                              name: owner_phone
+                            - code: rest_name
+                              name: name
+                        read_only: true
+                      - type: text
+                        code: verify_owner_otp
+                        hint: Verify Owner Number OTP
+                        required: true
+                        parent_code: null
+                        value: '******'
+                        oif_options:
+                          url: /swiggy/validateOtp
+                          params:
+                            - code: owner_phone
+                              name: owner_phone
+                            - code: otp_info
+                              name: otp_info
+                            - code: otp
+                              name: verify_owner_otp
+                        read_only: true
+                      - type: sifg
+                        code: sifg_doyouhaveavalid_wcnpnu7m7w
+                        required: true
+                        hint: Do you Have a valid FSSAI Registration/License?
+                        parent_code: null
+                        value: 'yes'
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouhaveavalid_wcnpnu7m7w
+                            hint: Do you Have a valid FSSAI Registration/License?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            'yes':
+                              - type: number
+                                code: fssailicensenum_20h4l1wcz
+                                hint: FSSAI Registration or License Number
+                                required: true
+                                parent_code: null
+                                value: '123456789012'
+                                read_only: false
+                              - type: date
+                                code: fssaiexpirydate_rvu4juhzte
+                                hint: FSSAI Expiration Date
+                                value: '15670123410'
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                            'no':
+                              - type: number
+                                code: enteryourfssaia_7lz90xk4le
+                                hint: 'Enter your FSSAI Acknowlegement number*'
+                                required: true
+                                min_chars: 17
+                                max_chars: 17
+                                parent_code: null
+                                read_only: false
+                              - type: date
+                                code: dateofapplicati_f0vhhqmtfh
+                                hint: Date of Application
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                        oif_options: null
+                        read_only: false
+                      - type: state_update_button
+                        code: mhbpo296q
+                        value: Proceed
+                        url: /swiggy/updatestate
+                        editable_inputs:
+                          - doyouhaveavalid_wcnpnu7m7w
+                          - fssailicensenum_20h4l1wcz
+                          - fssaiexpirydate_rvu4juhzte
+                          - enteryourfssaia_7lz90xk4le
+                          - dateofapplicati_f0vhhqmtfh
+                    editable_fields:
+                      - name
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  result: failure
+                  reason: Not found
+        '502':
+          description: Authorization Failed
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  result: failure
+                  reason: Authorization Failed
+      tags:
+        - 01 API
+      security:
+        - bearerAuth: []
+  /onboarding/swiggy/upsert:
+    post:
+      summary: 03 Creates a new inbound lead with details or List existing forms
+      operationId: getOrAddLead
+      description: Returns 200 if a new lead is created or 201 if existing lads exists
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          description: ''
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toState
+                - data
+              properties:
+                toState:
+                  type: string
+                data:
+                  type: object
+                  required:
+                    - name
+                    - city
+                    - owner_phone
+                    - verify_owner_otp
+                  properties:
+                    name:
+                      type: string
+                    city:
+                      type: string
+                    owner_phone:
+                      type: string
+                    verify_owner_otp:
+                      type: string
+            examples:
+              Test Data:
+                value:
+                  toState: inbound_leads_new
+                  data:
+                    name: Test Restaurant
+                    city: Bangalore
+                    owner_phone: '9807654321'
+                    verify_owner_otp: '123456'
+      responses:
+        '200':
+          description: Success with new lead creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_form_response'
+                  
+              examples:
+                Lead Creation Response:
+                  value:
+                    result: success
+                    identifier:
+                      code: lxft123j
+                      ref_id: '10004404'
+                    inputs:
+                      - type: sifg
+                        code: sifg_doyouhaveavalid_wcnpnu7m7w
+                        required: true
+                        hint: Do you Have a valid FSSAI Registration/License?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouhaveavalid_wcnpnu7m7w
+                            hint: Do you Have a valid FSSAI Registration/License?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            'yes':
+                              - type: number
+                                code: fssailicensenum_20h4l1wcz
+                                hint: FSSAI Registration or License Number
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: date
+                                code: fssaiexpirydate_rvu4juhzte
+                                hint: FSSAI Expiration Date
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                            'no':
+                              - type: number
+                                code: enteryourfssaia_7lz90xk4le
+                                hint: 'Enter your FSSAI Acknowlegement number*'
+                                required: true
+                                min_chars: 17
+                                max_chars: 17
+                                parent_code: null
+                                read_only: false
+                              - type: date
+                                code: dateofapplicati_f0vhhqmtfh
+                                hint: Date of Application
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                        oif_options: null
+                        read_only: false
+                      - type: state_update_button
+                        code: 3bh2sd2q1m
+                        value: Proceed
+                        url: /swiggy/updatestate
+                Existing Form Response:
+                  value:
+                    result: success
+                    inputs:
+                      - type: swiggy_form_list
+                        value:
+                          - ref_id: '10004401'
+                            name: Pizza Hut 1
+                            city: Bangalore
+                            last_updated_date: '20 Apr 2020, 6:00 PM'
+                            status: Submitted
+                            url: /onboarding/swiggy/getform/10004401
+                          - ref_id: '10004402'
+                            name: Pizza Hut 2
+                            city: Bangalore
+                            last_updated_date: '15 Apr 2020, 6:00 PM'
+                            status: Pending
+                            url: /onboarding/swiggy/getform/10004401
+                          - ref_id: '10004403'
+                            name: Pizza Hut 3
+                            city: Bangalore
+                            last_updated_date: '10 Apr 2020, 6:00 PM'
+                            status: Commision Rejected
+                            url: /onboarding/swiggy/getform/10004403
+                          - ref_id: '10004404'
+                            name: Pizza Hut 4
+                            city: Bangalore
+                            last_updated_date: '05 Apr 2020, 6:00 PM'
+                            status: Onboarding Pending
+                            url: /onboarding/swiggy/getform/10004404
+          headers: {}
+        '201':
+          description: Success with existing forms created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: The result as success or failure of the API call
+                    enum:
+                      - success
+                      - failure
+                  inputs:
+                      type: array
+                      minItems: 1
+                      maxItems: 1
+                      items:
+                        $ref: '#/components/schemas/swiggy_form_list'
+              examples:
+                Existing Form Return:
+                  value:
+                    result: success
+                    inputs:
+                      - type: swiggy_form_list
+                        value:
+                          form_list:
+                            - ref_id: '10004401'
+                              name: Pizza Hut 1
+                              city: Bangalore
+                              last_updated_date: '20 Apr 2020, 6:00 PM'
+                              status: Submitted
+                            - ref_id: '10004402'
+                              name: Pizza Hut 2
+                              city: Bangalore
+                              last_updated_date: '15 Apr 2020, 6:00 PM'
+                              status: Pending
+                            - ref_id: '10004403'
+                              name: Pizza Hut 3
+                              city: Bangalore
+                              last_updated_date: '10 Apr 2020, 6:00 PM'
+                              status: Commision Rejected
+                            - ref_id: '10004404'
+                              name: Pizza Hut 4
+                              city: Bangalore
+                              last_updated_date: '05 Apr 2020, 6:00 PM'
+                              status: Onboarding Pending
+        '501':
+          description: Invalid OTP
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  result: failure
+                  reason: Invalid OTP
+      tags:
+        - 01 API
+      security:
+        - bearerAuth: []
+  /swiggy/updatestate:
+    post:
+      summary: 04 State Update based on identifier
+      operationId: upadteStateByIdentifier
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          required: true
+      responses:
+        '200':
+          description: Successfuly updated the lead state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_form_response'
+              examples:
+                FSSAI updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: 3bh2sd2q1m
+                    inputs:
+                      - type: commsion_state
+                        value: 'Please note 25% commission...'
+                        meta:
+                          show_fssai: true
+                          show_warning: true
+                          inputs:
+                            acceptable: sifg_commissionaccep_m621ytkcy
+                            reasons: reasonsforcommi_npnn8imqj
+                            remarks: customremarks_x2hjy23ood
+                      - type: state_update_button
+                        code: mhbpo296q
+                        value: Proceed
+                        url: /onboarding/swiggy
+                    editable_fields:
+                      - name
+                Commision updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: mhbpo296q
+                    inputs:
+                      - type: sifg
+                        code: sifg_doyouoperate2or_xhegnpa4s8q
+                        required: true
+                        hint: Do you operate 2 or more kitchens in one location?
+                        parent_code: null
+                        value: null
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouoperate2or_xhegnpa4s8q
+                            hint: Do you operate 2 or more kitchens in one location?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs: {}
+                        oif_options: null
+                        read_only: false
+                      - type: sifg
+                        code: sifg_areyoutheownero_8922mkl2y8
+                        required: true
+                        hint: Are you the Owner or the manager?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: areyoutheownero_8922mkl2y8
+                            hint: Are you the Owner or the manager?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: restaurantowner
+                                name: Restaurant Owner
+                                order: 3
+                              - code: manager
+                                name: Manager
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            restaurantowner:
+                              - type: text
+                                code: ppaownername_9i9mmxzhga
+                                hint: Owner Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: number
+                                code: ppaownernumber_2rkdcfc3im
+                                hint: Owner Number
+                                required: true
+                                min_chars: 10
+                                max_chars: 10
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: ppaowneremail_3rtukhgjw
+                                hint: Owner Email
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: sifg
+                                code: sifg_isownerandmanag_njnuq2q99k
+                                required: true
+                                hint: Is Owner and manager the same?
+                                parent_code: null
+                                value: select
+                                sifg_options:
+                                  selection:
+                                    type: code_name_spinner
+                                    code: isownerandmanag_njnuq2q99k
+                                    hint: Is Owner and manager the same?
+                                    code_name_spinner_options:
+                                      - code: none
+                                        name: Select
+                                        order: 0
+                                      - code: 'yes'
+                                        name: 'Yes'
+                                        order: 3
+                                      - code: 'no'
+                                        name: 'No'
+                                        order: 4
+                                    required: true
+                                  inputs:
+                                    select: []
+                                    option_2: []
+                                    'yes':
+                                      - type: text
+                                        code: ppamanagername_jgokl6vh5d
+                                        hint: Manager Name
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                      - type: number
+                                        code: ppamanagernumbe_zejnl913mf
+                                        hint: Manager Number
+                                        required: true
+                                        min_chars: 10
+                                        max_chars: 10
+                                        parent_code: null
+                                        read_only: false
+                                      - type: text
+                                        code: ppamanageremail_uggsynwkv
+                                        hint: Manager Email
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                    'no':
+                                      - type: text
+                                        code: ppamanagername_jgokl6vh5d
+                                        hint: Manager Name
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                      - type: number
+                                        code: ppamanagernumbe_zejnl913mf
+                                        hint: Manager Number
+                                        required: true
+                                        min_chars: 10
+                                        max_chars: 10
+                                        parent_code: null
+                                        read_only: false
+                                      - type: number
+                                        code: enterotp_2bmxr2afj
+                                        hint: Enter OTP
+                                        required: false
+                                        parent_code: null
+                                        read_only: false
+                                      - type: text
+                                        code: ppamanageremail_uggsynwkv
+                                        hint: Manager Email
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                oif_options: null
+                                read_only: false
+                            manager:
+                              - type: text
+                                code: ppamanagername_jgokl6vh5d
+                                hint: Manager Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: number
+                                code: ppamanagernumbe_zejnl913mf
+                                hint: Manager Number
+                                required: true
+                                min_chars: 10
+                                max_chars: 10
+                                parent_code: null
+                                read_only: false
+                              - type: number
+                                code: enterotp_2bmxr2afj
+                                hint: Enter OTP
+                                required: false
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: ppamanageremail_uggsynwkv
+                                hint: Manager Email
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: sifg
+                                code: sifg_ismanagerandown_994m3rob9p
+                                required: true
+                                hint: Is Manager and owner the same
+                                parent_code: null
+                                value: null
+                                sifg_options:
+                                  selection:
+                                    type: code_name_spinner
+                                    code: ismanagerandown_994m3rob9p
+                                    hint: Is Manager and owner the same
+                                    code_name_spinner_options:
+                                      - code: none
+                                        name: Select
+                                        order: 0
+                                      - code: 'yes'
+                                        name: 'Yes'
+                                      - code: 'no'
+                                        name: 'No'
+                                        order: 3
+                                    required: true
+                                  inputs:
+                                    select: []
+                                    'yes':
+                                      - type: text
+                                        code: ppaownername_9i9mmxzhga
+                                        hint: Owner Name
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                      - type: number
+                                        code: ppaownernumber_2rkdcfc3im
+                                        hint: Owner Number
+                                        required: true
+                                        min_chars: 10
+                                        max_chars: 10
+                                        parent_code: null
+                                        read_only: false
+                                      - type: text
+                                        code: ppaowneremail_3rtukhgjw
+                                        hint: Owner Email
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                    'no':
+                                      - type: text
+                                        code: ppaownername_9i9mmxzhga
+                                        hint: Owner Name
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                      - type: number
+                                        code: ppaownernumber_2rkdcfc3im
+                                        hint: Owner Number
+                                        required: true
+                                        min_chars: 10
+                                        max_chars: 10
+                                        parent_code: null
+                                        read_only: false
+                                      - type: text
+                                        code: ppaowneremail_3rtukhgjw
+                                        hint: Owner Email
+                                        required: true
+                                        parent_code: null
+                                        read_only: false
+                                oif_options: null
+                                read_only: false
+                        oif_options: null
+                        read_only: false
+                      - type: text
+                        code: ppainvoicingema_om0vdcxso
+                        hint: Invoicing Email ID
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/sendEmailOtp
+                          params:
+                            - code: invoice_email
+                              name: ppainvoicingema_om0vdcxso
+                            - code: ''
+                              name: ''
+                        read_only: false
+                      - type: sifg
+                        code: sifg_whatisyourprefe_xcomh99ll
+                        required: true
+                        hint: What is your preferred language for training?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: whatisyourprefe_xcomh99ll
+                            hint: What is your preferred language for training?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: option_2
+                                name: Option 2
+                            required: true
+                          inputs: {}
+                        oif_options: null
+                        read_only: false
+                      - type: location
+                        code: restaurantaddre_oh2hhfv348
+                        hint: Restaurant Address
+                        required: true
+                        pinned: true
+                        parent_code: null
+                        tags: null
+                        location_tag: null
+                        read_only: false
+                      - type: text
+                        code: invoice_email_otp
+                        hint: Validate Invoice OTP
+                        required: false
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validateEmailOtp
+                          params:
+                            - code: otp
+                              name: invoice_email_otp
+                            - code: invoice_email
+                              name: invoice_email
+                        read_only: false
+                      - type: text
+                        code: postal_code
+                        hint: Postal Code
+                        required: false
+                        min_chars: 6
+                        max_chars: 6
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/search-state-by-pin
+                          params:
+                            - code: code
+                              name: postal_code
+                        read_only: false
+                      - type: state_update_button
+                        code: rkoh733z9q
+                        value: Proceed
+                        url: /onboarding/swiggy
+                    editable_fields:
+                      - name
+                Location updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: rkoh733z9q
+                    inputs:
+                      - type: swiggy_waiting_on_poly
+                GST updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: p42fch06vq
+                    inputs:
+                      - type: swiggy_welcome_screen
+                      - type: label
+                        code: new_inbound_header
+                        value: Please fill the following details
+                        read_only: false
+                        meta:
+                          style:
+                            type: heading
+                            background_color: x00000000
+                            hidden: false
+                      - type: text
+                        code: name
+                        hint: Name
+                        required: true
+                        parent_code: null
+                        tags:
+                          - name
+                          - name
+                        read_only: false
+                      - type: dropdown
+                        code: city
+                        hint: City
+                      - type: text
+                        code: owner_phone
+                        hint: Enter Owner Number
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/sendOtp
+                          params:
+                            - code: phone
+                              name: owner_phone
+                            - code: rest_name
+                              name: name
+                        read_only: false
+                      - type: text
+                        code: verify_owner_otp
+                        hint: Verify Owner Number OTP
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validateOtp
+                          params:
+                            - code: owner_phone
+                              name: owner_phone
+                            - code: otp_info
+                              name: otp_info
+                            - code: otp
+                              name: verify_owner_otp
+                        read_only: false
+                      - type: state_update_button
+                        code: inbound_leads_new
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+                    editable_fields:
+                      - name
+      tags:
+        - 01 API
+      description: The same API call with different body is sent to update the lead to a particular state. The API is in sync with the current lead upadte on identifier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generic_state_update_request_body'
+            examples:
+              FSSAI update - Yes:
+                value:
+                  toState: 3bh2sd2q1m
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    doyouhaveavalid_wcnpnu7m7w: 'Yes'
+                    fssailicensenum_20h4l1wcz: '123412341234'
+                    fssaiexpirydate_rvu4juhzte: '1589792641170'
+                  edit:
+                    name: Some new name
+              FSSAI update - No:
+                value:
+                  toState: 3bh2sd2q1m
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    doyouhaveavalid_wcnpnu7m7w: 'No'
+                    enteryourfssaia_7lz90xk4le: '12345678901234567'
+                    dateofapplicati_f0vhhqmtfh: '1589792641170'
+              Commission update - Accepted:
+                value:
+                  toState: mhbpo296q
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: acceptable
+              Commission update - Declined:
+                value:
+                  toState: mhbpo296q
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: notacceptable
+                    reasonsforcommi_npnn8imqj:
+                      - Commission is High
+                      - On-boarding fee is high
+                      - Others
+                    customremarks_x2hjy23ood: Some remarks
+              Location update:
+                value: {}
+      security:
+        - bearerAuth: []
+    parameters: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Missing or invalid access token
+  schemas:
+    generic_form_response:
+      type: object
+      description: ''
+      title: Generic Form Update Response Schema
+      x-examples:
+        Sample Response:
+          result: success
+          identifier:
+            code: lxft123j
+            ref_id: '10004404'
+          inputs:
+            - type: sifg
+              code: sifg_doyouhaveavalid_wcnpnu7m7w
+              required: true
+              hint: Do you Have a valid FSSAI Registration/License?
+              parent_code: null
+              value: select
+              sifg_options:
+                selection:
+                  type: code_name_spinner
+                  code: doyouhaveavalid_wcnpnu7m7w
+                  hint: Do you Have a valid FSSAI Registration/License?
+                  code_name_spinner_options:
+                    - code: none
+                      name: Select
+                      order: 0
+                    - code: 'yes'
+                      name: 'Yes'
+                      order: 3
+                    - code: 'no'
+                      name: 'No'
+                      order: 4
+                  required: true
+                inputs:
+                  select: []
+                  option_2: []
+                  'yes':
+                    - type: number
+                      code: fssailicensenum_20h4l1wcz
+                      hint: FSSAI Registration or License Number
+                      required: true
+                      parent_code: null
+                      read_only: false
+                    - type: date
+                      code: fssaiexpirydate_rvu4juhzte
+                      hint: FSSAI Expiration Date
+                      required: true
+                      show_day_month_year: DMY
+                      min_date: 0
+                      max_date: 0
+                      parent_code: null
+                      read_only: false
+                  'no':
+                    - type: number
+                      code: enteryourfssaia_7lz90xk4le
+                      hint: 'Enter your FSSAI Acknowlegement number*'
+                      required: true
+                      min_chars: 17
+                      max_chars: 17
+                      parent_code: null
+                      read_only: false
+                    - type: date
+                      code: dateofapplicati_f0vhhqmtfh
+                      hint: Date of Application
+                      required: true
+                      show_day_month_year: DMY
+                      min_date: 0
+                      max_date: 0
+                      parent_code: null
+                      read_only: false
+              oif_options: null
+              read_only: false
+            - type: state_update_button
+              code: 3bh2sd2q1m
+              value: Proceed
+              url: /swiggy/updatestate/fssai
+              editable_fields: []
+      properties:
+        result:
+          type: string
+          enum:
+            - success
+            - failure
+          description: The result as success or failure of the API call
+        identifier:
+          type: object
+          description: Keys to uniquely identify the Form - code/ref_if
+        meta:
+          type: object
+          description: Client specific control handler data for UI
+        inputs:
+          type: array
+          description: The list of new input fields that need to be rendered
+          items:
+            type: object
+        editable_fields:
+          type: array
+          description: The list of existing input fields that are allowed to be updatable
+          items:
+            type: string
+      required:
+        - result
+    swiggy_form_list:
+      title: 01 Swiggy Form List
+      description: 'Exisiting filled form by User. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415457298>) under **Existing forms for the number**'
+      type: object
+      x-examples:
+        form list part 1:
+          type: swiggy_form_list
+          value:
+            - ref_id: '10004401'
+              name: Pizza Hut 1
+              city: Bangalore
+              last_updated_date: '20 Apr 2020, 6:00 PM'
+              status: Submitted
+              url: /onboarding/swiggy/getform/10004401
+            - ref_id: '10004402'
+              name: Pizza Hut 2
+              city: Bangalore
+              last_updated_date: '15 Apr 2020, 6:00 PM'
+              status: Pending
+              url: /onboarding/swiggy/getform/10004401
+            - ref_id: '10004403'
+              name: Pizza Hut 3
+              city: Bangalore
+              last_updated_date: '10 Apr 2020, 6:00 PM'
+              status: Commision Rejected
+              url: /onboarding/swiggy/getform/10004403
+            - ref_id: '10004404'
+              name: Pizza Hut 4
+              city: Bangalore
+              last_updated_date: '05 Apr 2020, 6:00 PM'
+              status: Onboarding Pending
+              url: /onboarding/swiggy/getform/10004404
+      properties:
+        type:
+          type: string
+          enum:
+            - swiggy_form_list
+          description: The type of input field to be rendered
+          example: swiggy_form_list
+        value:
+          type: array
+          description: List of all form data; required only for pre-poulating the data
+          items:
+            type: object
+            properties:
+              ref_id:
+                type: string
+                description: 8 digit Reference Id for the form
+                minLength: 8
+                maxLength: 8
+                example: '10004404'
+              name:
+                type: string
+                description: Name of Restaurant
+              city:
+                type: string
+                description: City of Restaurant (Swiggy City)
+              last_updated_date:
+                type: string
+                description: Last updated date of the form
+                example: '20 Apr 2020, 6:00 PM'
+              status:
+                type: string
+                description: Current status of the lead based in last state map
+                enum:
+                  - Commission Declined
+              url:
+                type: string
+                description: "\\\"Get\\\" url link for the entry"
+            required:
+              - ref_id
+              - name
+              - city
+              - last_updated_date
+              - status
+              - url
+      required:
+        - type
+      x-tags:
+        - Custom Input Fields
+    swiggy_operational_hours:
+      title: 03 Swiggy Operational Hours
+      description: 'Operation hours of the restaurant. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413950286) under **Operational Hours**'
+      type: object
+      x-examples:
+        Pre-poulated input field:
+          type: swiggy_operational_hours
+          read_only: false
+          value:
+            type: all
+            mon:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            tue:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            wed:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            thu:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            fri:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            sat:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            sun:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+      properties:
+        type:
+          type: string
+          enum:
+            - swiggy_operational_hours
+          description: The type of input field to be rendered
+          example: swiggy_operational_hours
+        read_only:
+          type: boolean
+          description: Is the field non-editable
+        value:
+          type: object
+          description: List of all slots per day; required only for pre-poulating the data and response JSON
+          properties:
+            type:
+              type: string
+              enum:
+                - all
+                - week
+                - custom
+            mon:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            tue:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            wed:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            thu:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            fri:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            sat:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+            sun:
+              type: array
+              description: List of all slots; 1 slot required
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  start:
+                    type: string
+                    example: '0900'
+                  end:
+                    type: string
+                    example: '1600'
+          required:
+            - type
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+      required:
+        - type
+      x-tags:
+        - Custom Input Fields
+    standard_array_input_field:
+      title: 02 Array Input Field items
+      description: 'MRP items on the menu can be used as an Array field. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **Please list the items**'
+      type: object
+      x-examples:
+        Pre-poulated MRP input field:
+          type: array_input_field
+          read_only: false
+          code: mrp_items
+          hint: List the items
+          iterator: true
+          array_options:
+            inputs:
+              - type: text
+                code: item_name
+                hint: Item
+                required: true
+                parent_code: null
+          values:
+            - type: text
+              code: item_name
+              hint: Item
+              required: true
+              parent_code: null
+              values: Coke
+            - type: text
+              code: item_name
+              hint: Item
+              required: true
+              parent_code: null
+              values: Pepsi
+            - type: text
+              code: item_name
+              hint: Item
+              required: true
+              parent_code: null
+              values: Diet Coke
+        Blank MRP input field:
+          type: array_input_field
+          read_only: false
+          code: mrp_items
+          hint: List the items
+          iterator: true
+          array_options:
+            inputs:
+              - type: text
+                code: item_name
+                hint: Item
+                required: true
+                parent_code: null
+        MRP Data in API:
+          mrp_items:
+            - item_name: Coke
+            - item_name: Pepsi
+            - item_name: Diet Coke
+        Multiple Field Array:
+          type: array_iput_field
+          read_only: false
+          code: mrp_items
+          hint: List the items
+          iterator: true
+          array_options:
+            inputs:
+              - type: text
+                code: name
+                hint: Name
+                required: true
+                parent_code: null
+                tags:
+                  - name
+                  - name
+                read_only: false
+              - type: sifg
+                code: sifg_doyouhaveavalid_wcnpnu7m7w
+                required: true
+                hint: Do you Have a valid FSSAI Registration/License?
+                parent_code: null
+                value: select
+                sifg_options:
+                  selection:
+                    type: code_name_spinner
+                    code: doyouhaveavalid_wcnpnu7m7w
+                    hint: Do you Have a valid FSSAI Registration/License?
+                    code_name_spinner_options:
+                      - code: none
+                        name: Select
+                        order: 0
+                      - code: 'yes'
+                        name: 'Yes'
+                        order: 3
+                      - code: 'no'
+                        name: 'No'
+                        order: 4
+                    required: true
+                  inputs:
+                    select: []
+                    option_2: []
+                    'yes':
+                      - type: number
+                        code: fssailicensenum_20h4l1wcz
+                        hint: FSSAI Registration or License Number
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: date
+                        code: fssaiexpirydate_rvu4juhzte
+                        hint: FSSAI Expiration Date
+                        required: true
+                        show_day_month_year: DMY
+                        min_date: 0
+                        max_date: 0
+                        parent_code: null
+                        read_only: false
+                    'no':
+                      - type: number
+                        code: enteryourfssaia_7lz90xk4le
+                        hint: 'Enter your FSSAI Acknowlegement number*'
+                        required: true
+                        min_chars: 17
+                        max_chars: 17
+                        parent_code: null
+                        read_only: false
+                      - type: date
+                        code: dateofapplicati_f0vhhqmtfh
+                        hint: Date of Application
+                        required: true
+                        show_day_month_year: DMY
+                        min_date: 0
+                        max_date: 0
+                        parent_code: null
+                        read_only: false
+                oif_options: null
+                read_only: false
+      x-tags:
+        - Generic Input Fields
+      properties:
+        type:
+          type: string
+          description: The type of input field to be rendered
+          example: array_input_field
+        code:
+          type: string
+          description: The unique identifier of the input field
+          example: mrp_items
+        hint:
+          type: string
+          description: The common label for the input field
+          example: Please list the items
+        iterator:
+          type: boolean
+          description: To append number to each input field (only in the front end)
+          default: 'false'
+        read_only:
+          type: boolean
+          description: Is the field non-editable
+          default: 'false'
+        array_options:
+          type: object
+          description: List of all Item names
+          properties:
+            inputs:
+              type: array
+              minItems: 1
+              description: The array of inputs that need to be replicated everytime `add` is clicked
+              items:
+                type: object
+                description: Object of a standard input field
+          required:
+            - inputs
+        values:
+          type: array
+          minItems: 1
+          description: Only required for pre-population
+          items:
+            type: object
+      required:
+        - type
+    swiggy_packaging_details_item_level:
+      title: 02 Swiggy Item Level Packaging Details
+      description: 'Item level packaging charge. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **What is your packaging charge**'
+      type: object
+      x-examples:
+        Pre-poulated input field:
+          type: swiggy_packaging_details_item_level
+          read_only: 'true'
+          value:
+            items:
+              - name: Rice
+                price: 100
+                packaging: 20
+                image:
+                  media_type: jpeg
+                  items:
+                    - bucket: vymo-uploads
+                      filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      size: '300409'
+                      mime: application/jpeg
+                      label: jpeg (1)
+                      path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                  bucket: vymo-uploads
+              - name: Jeera Rice
+                price: 100
+                packaging: 10
+            table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
+      properties:
+        type:
+          type: string
+          enum:
+            - swiggy_packaging_details_item_level
+          description: The type of input field to be rendered
+          example: swiggy_packaging_details_item_level
+        value:
+          type: object
+          properties:
+            items:
+              type: array
+              description: List of all packaging items; required only for pre-poulating the data
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the item
+                    example: Rice
+                  price:
+                    type: number
+                    description: Item Price
+                    example: 100
+                  packaging:
+                    type: number
+                    description: Packaging price
+                    example: 20
+                  image:
+                    description: 'Image S3 URL, if packaging cost is higher than item price slab'
+                    type: object
+                    example:
+                      media_type: pdf
+                      items:
+                        - bucket: vymo-uploads
+                          filename: 2020-05-19-10-06-51a2_zqq_ppe.pdf
+                          size: '300409'
+                          mime: application/pdf
+                          label: pdf (1)
+                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.pdf
+                      bucket: vymo-uploads
+                required:
+                  - name
+                  - price
+                  - packaging
+            table:
+              type: array
+              description: List of all form data; required only for pre-poulating the data
+              items:
+                type: object
+                properties:
+                  slab:
+                    type: array
+                    minItems: 2
+                    maxItems: 2
+                    example:
+                      - 0
+                      - 50
+                    description: Range item price
+                    items:
+                      type: integer
+                  value:
+                    type: integer
+                    example: 5
+                    description: Max value of packaging cost
+                required:
+                  - slab
+                  - value
+          required:
+            - table
+      required:
+        - type
+      x-tags:
+        - Custom Input Fields
+    standard_state_update_button:
+      title: 01 State Update Button
+      type: object
+      x-examples:
+        Sample Config:
+          type: state_update_button
+          code: rkoh733z9q
+          value: Proceed
+          url: /swiggy/updatestate
+          editable_inputs:
+            - doyouhaveavalid_wcnpnu7m7w
+            - fssailicensenum_20h4l1wcz
+            - fssaiexpirydate_rvu4juhzte
+            - enteryourfssaia_7lz90xk4le
+            - dateofapplicati_f0vhhqmtfh
+      description: "The state update button is added as an input field to control from the backend what api to be called and when/where to display the button.\n - The state update button will be inactive until all fields are filled\n - On click the button will send the \"Associated Input Fields\" (the input fields that had been sent in the array of the button to the backend)\n - Once active and clicked, the button will be inactive again, until the response of the state update API\n - If the state update API is successful, the button will be hidden\n - If the state update API fails, the button will be active again\n - If `editable_inputs exits`, Only the fields in this array should be sent in the `data` during update api call \n \n * NOTE: `editable_fields` should always honour profile fields in the `edit` key of state update API"
+      x-tags:
+        - Generic Input Fields
+      properties:
+        type:
+          type: string
+          description: The type of input field to be rendered
+        code:
+          type: string
+          description: State Code to update in
+        value:
+          type: string
+          description: Caption of the Button
+        url:
+          type: string
+          description: POST API call end point
+        editable_inputs:
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    swiggy_poly_result:
+      title: 04 Swiggy Polygon Update Result
+      type: object
+      x-examples:
+        Sample Config:
+          type: swiggy_poly_result
+          value: 'success | failure'
+      properties:
+        type:
+          type: string
+          default: state_update_button
+          description: The type of input field to be rendered
+        value:
+          type: string
+          enum:
+            - success
+            - failure
+          description: As updated by the SMs
+      required:
+        - type
+        - value
+      x-tags:
+        - Custom Input Fields
+      description: ''
+    standard_meta_configurations:
+      title: 00 Standard meta_configurations for Input fields
+      type: object
+      description: meta tag is appended to the input field to give additional functionality over existing lms input fields.
+      x-examples:
+        All fields:
+          meta:
+            labels:
+              heading: lattitude_1w5f8tjs2
+              subheading: longitude_field_code
+              tooltip: address_field_code
+            style:
+              align: 'left | right'
+              occupy_full_form_width: false
+              hidden: false
+            link:
+              oif: true
+              on_value_change: 'true'
+            tooltip: ''
+            validation:
+              error: Incorrect OTP
+              success: Phone No Validated
+            prefill_fields:
+              latitude: lattitude_1w5f8tjs2
+              longitude: longitude_field_code
+              address: address_field_code
+              state: state_field_code
+              pincode: pincode_field_code
+      x-tags:
+        - Generic Input Fields
+      properties:
+        meta:
+          type: object
+          properties:
+            labels:
+              type: object
+              properties:
+                heading:
+                  type: string
+                subheading:
+                  type: string
+                tooltip:
+                  type: string
+                  description: Text to be available as info for the input field
+            style:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - info
+                    - error
+                    - warn
+                    - heading
+                    - switch
+                  description: "* `info`: For `label`, info type style\n* `error`: For `label`, error type style \n* `warn`: For `label`, warn type style\n* `heading`: For `label`, heading type style\n* `switch`: For type `sifg` only. Allows `default` selection if there are only 2 options. If sifg has more than 2 options, 2nd and 3rd option will be allowed to switch"
+                default:
+                  type: string
+                  description: 'Used for `sifg`, to allow default value incase of `type` = `switch`'
+                background_color:
+                  type: string
+                  example: x00000000
+                  description: Override background_color
+                align:
+                  type: string
+                  enum:
+                    - left
+                    - right
+                    - centre
+                  description: Alignment of the control
+                occupy_full_form_width:
+                  type: boolean
+                  default: 'false'
+                  description: 'If `true`, will override align'
+                hidden:
+                  type: boolean
+                  default: 'false'
+                  description: 'if `true`, will be hidden on frontend'
+            link:
+              type: object
+              properties:
+                oif:
+                  type: boolean
+                  default: 'false'
+                on_value_change:
+                  type: boolean
+                  default: 'false'
+                text:
+                  type: string
+                url:
+                  type: string
+            validation:
+              type: object
+              properties:
+                error:
+                  type: string
+                success:
+                  type: string
+            prefill_fields:
+              type: object
+              description: |
+                Supported usage
+                - `location`: On picker value changes, the corresponding fields will be populated
+              properties:
+                latitude:
+                  type: string
+                  description: reference input field for lattitude
+                longitude:
+                  type: string
+                  description: reference input field for longitude
+                address:
+                  type: string
+                  description: reference input field for address
+                state:
+                  type: string
+                  description: reference input field for state
+                pincode:
+                  type: string
+                  description: reference input field for pincode
+    generic_state_update_request_body:
+      title: Generic State Update Request Body
+      type: object
+      properties:
+        toState:
+          type: string
+          description: The state code to which the state needs to be updated to
+        identifier:
+          type: object
+          description: The lead identifier which needs to be updated. This has to be unique
+        data:
+          type: object
+          description: The state update fields for the input in state update
+        edit:
+          type: object
+          description: The profile fields updated during the state update
+      required:
+        - toState
+        - identifier
+        - data
+    swiggy_commission_state_if:
+      title: 01 Custom State Commission
+      type: object
+      x-examples:
+        Commission State Input Field:
+          type: commsion_state
+          value: 'Please note 25% commission...'
+          meta:
+            show_fssai: true
+            show_warning: true
+            inputs:
+              acceptable: sifg_commissionaccep_m621ytkcy
+              reasons: reasonsforcommi_npnn8imqj
+              remarks: customremarks_x2hjy23ood
+      properties:
+        type:
+          type: string
+          description: '`commsion_state` as input type'
+          default: commsion_state
+        value:
+          type: string
+          example: 'Please note 25% commission...'
+        meta:
+          type: object
+          properties:
+            show_fssai:
+              type: boolean
+            show_warning:
+              type: boolean
+            inputs:
+              type: object
+              properties:
+                acceptable:
+                  type: string
+                  example: sifg_commissionaccep_m621ytkcy
+                reasons:
+                  type: string
+                  example: reasonsforcommi_npnn8imqj
+                remarks:
+                  type: string
+                  example: customremarks_x2hjy23ood
+      x-tags:
+        - Custom State as Input Field
