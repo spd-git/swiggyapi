@@ -152,7 +152,7 @@ paths:
                       code: lxft123j
                       ref_id: '10004404'
                     meta:
-                      progress_bar_code: 3bh2sd2q1m
+                      progress_bar_code: inbound_leads_new
                       progress_bar_config:
                         progress:
                           - name: Restaurant Details
@@ -474,8 +474,6 @@ paths:
                   reason: Authorization Failed
       tags:
         - 01 API
-      security:
-        - bearerAuth: []
   /onboarding/swiggy/upsert:
     post:
       summary: 03 Creates a new inbound lead with details or List existing forms
@@ -532,7 +530,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/generic_form_response'
-                  
               examples:
                 Lead Creation Response:
                   value:
@@ -651,11 +648,11 @@ paths:
                       - success
                       - failure
                   inputs:
-                      type: array
-                      minItems: 1
-                      maxItems: 1
-                      items:
-                        $ref: '#/components/schemas/swiggy_form_list'
+                    type: array
+                    minItems: 1
+                    maxItems: 1
+                    items:
+                      $ref: '#/components/schemas/swiggy_form_list'
               examples:
                 Existing Form Return:
                   value:
@@ -695,8 +692,6 @@ paths:
                   reason: Invalid OTP
       tags:
         - 01 API
-      security:
-        - bearerAuth: []
   /swiggy/updatestate:
     post:
       summary: 04 State Update based on identifier
@@ -1183,8 +1178,6 @@ paths:
                     customremarks_x2hjy23ood: Some remarks
               Location update:
                 value: {}
-      security:
-        - bearerAuth: []
     parameters: []
 components:
   securitySchemes:
