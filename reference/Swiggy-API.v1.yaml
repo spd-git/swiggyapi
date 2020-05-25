@@ -2104,3 +2104,60 @@ components:
                   example: customremarks_x2hjy23ood
       x-tags:
         - Custom State as Input Field
+    generic_progress_bar:
+      title: Progress bar
+      type: object
+      x-examples:
+        Section 1:
+          progress_bar_config:
+            progress:
+              - name: Restaurant Details
+                first_field: name
+                code: inbound_leads_new
+              - name: FSSAI Details
+                first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+                code: 3bh2sd2q1m
+              - name: Commision and Onboarding
+                first_field: sifg_commissionaccep_m621ytkcy
+                code: mhbpo296q
+              - name: Owner/Manager Details
+                first_field: restaurantaddre_oh2hhfv348
+                end_field:
+                  - sifg_whatisyourprefe_xcomh99ll
+                  - asdasdasd
+                  - soem_other_field
+                code: mhbpo296q
+              - name: Location Details
+                first_field: restaurantaddre_oh2hhfv348
+                code: rkoh733z9q
+      properties:
+        progress_bar_config:
+          type: object
+          properties:
+            progress:
+              type: array
+              items:
+                type: object
+                minProperties: 1
+                properties:
+                  name:
+                    type: string
+                    example: Owner/Manager Details
+                    description: Caption to be displayed in front end
+                  code:
+                    type: string
+                    description: identifier for the array item
+                    example: mhbpo296q
+                  first_field:
+                    type: string
+                    description: field to scroll to incase clicked on
+                    example: restaurantaddre_oh2hhfv348
+                  end_field:
+                    type: array
+                    description: To be ticked if ANY 1 of the fields in the array are filled
+                    items:
+                      type: string
+                required:
+                  - name
+                  - code
+      description: 'Currently is being used only in Swiggy. The progress bar is  ticked based on `"progress_bar_code"` property in meta key of the response of getForm or updateState APIs, to have complete control from backend.'
