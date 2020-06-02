@@ -105,6 +105,15 @@ paths:
                               name: owner_phone
                             - code: rest_name
                               name: name
+                        meta:
+                          link:
+                            oif: true
+                            text: Send OTP
+                            wait: 60
+                            post_wait_text: Resend OTP
+                          validation:
+                            error: Could not send OTP
+                            success: OTP sent
                         read_only: false
                       - type: text
                         code: verify_owner_otp
@@ -120,6 +129,13 @@ paths:
                               name: otp_info
                             - code: otp
                               name: verify_owner_otp
+                        meta:
+                          link:
+                            oif: true
+                            text: Verify OTP
+                          validation:
+                            error: Incorrect OTP
+                            success: Phone Validated
                         read_only: false
                       - type: state_update_button
                         code: inbound_leads_new
@@ -1922,7 +1938,7 @@ components:
       x-tags:
         - Custom Input Fields
       description: ''
-    standard_meta_configurations:
+    standard_meta_configurations_if:
       title: 00 Standard meta_configurations for Input fields
       type: object
       description: meta tag is appended to the input field to give additional functionality over existing lms input fields.
@@ -2109,6 +2125,63 @@ components:
       type: object
       x-examples:
         Section 1:
+          progress:
+            - name: Restaurant Details
+              first_field: name
+              code: inbound_leads_new
+            - name: FSSAI Details
+              first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+              code: 3bh2sd2q1m
+            - name: Commision and Onboarding
+              first_field: sifg_commissionaccep_m621ytkcy
+              code: mhbpo296q
+            - name: Owner/Manager Details
+              first_field: restaurantaddre_oh2hhfv348
+              end_field:
+                - sifg_whatisyourprefe_xcomh99ll
+                - asdasdasd
+                - soem_other_field
+              code: mhbpo296q
+            - name: Location Details
+              first_field: restaurantaddre_oh2hhfv348
+              code: rkoh733z9q
+      description: 'Currently is being used only in Swiggy. The progress bar is configured as per `"progress_bar_config"` and ticked based on `"progress_bar_code"` property in meta key (see #/components/schemas/standard_meta_configurations_global) of the response of getForm or updateState APIs, to have complete control from backend.'
+      properties:
+        progress:
+          type: array
+          items:
+            type: object
+            minProperties: 1
+            properties:
+              name:
+                type: string
+                example: Owner/Manager Details
+                description: Caption to be displayed in front end
+              code:
+                type: string
+                description: identifier for the array item
+                example: mhbpo296q
+              first_field:
+                type: string
+                description: field to scroll to incase clicked on
+                example: restaurantaddre_oh2hhfv348
+              end_field:
+                type: array
+                description: To be ticked if ANY 1 of the fields in the array are filled
+                items:
+                  type: string
+            required:
+              - name
+              - code
+    standard_meta_configurations_global:
+      title: 00 Standard Global meta_configurations
+      type: object
+      x-tags:
+        - Generic Input Fields
+      x-examples:
+        All meta keys:
+          clear: all
+          progress_bar_code: 3bh2sd2q1m
           progress_bar_config:
             progress:
               - name: Restaurant Details
@@ -2131,33 +2204,11 @@ components:
                 first_field: restaurantaddre_oh2hhfv348
                 code: rkoh733z9q
       properties:
+        clear:
+          type: string
+          enum:
+            - all
+        progress_bar_code:
+          type: string
         progress_bar_config:
-          type: object
-          properties:
-            progress:
-              type: array
-              items:
-                type: object
-                minProperties: 1
-                properties:
-                  name:
-                    type: string
-                    example: Owner/Manager Details
-                    description: Caption to be displayed in front end
-                  code:
-                    type: string
-                    description: identifier for the array item
-                    example: mhbpo296q
-                  first_field:
-                    type: string
-                    description: field to scroll to incase clicked on
-                    example: restaurantaddre_oh2hhfv348
-                  end_field:
-                    type: array
-                    description: To be ticked if ANY 1 of the fields in the array are filled
-                    items:
-                      type: string
-                required:
-                  - name
-                  - code
-      description: 'Currently is being used only in Swiggy. The progress bar is  ticked based on `"progress_bar_code"` property in meta key of the response of getForm or updateState APIs, to have complete control from backend.'
+          $ref: '#/components/schemas/generic_progress_bar'
