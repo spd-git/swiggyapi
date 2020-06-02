@@ -1067,6 +1067,10 @@ paths:
                           params:
                             - code: code
                               name: postal_code
+                        meta:
+                          link:
+                            oif: true
+                            on_value_change: 'true'
                         read_only: false
                       - type: state_update_button
                         code: rkoh733z9q
