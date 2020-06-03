@@ -23,7 +23,7 @@ info:
   contact:
     name: Sudeep Patil
     email: sudeep@getvymo.com
-  version: 0.0.5
+  version: 0.0.6
 servers:
   - url: 'https://swiggy.lms.getvymo.com'
     description: Production server
@@ -1082,71 +1082,528 @@ paths:
                   value:
                     result: success
                     meta:
+                      clear: all
                       progress_bar_code: rkoh733z9q
                     inputs:
-                      - type: swiggy_waiting_on_poly
+                      - type: text
+                        code: inbound_pan
+                        hint: Enter Pan Field
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validatePan
+                          params:
+                            - code: inbound_pan
+                              name: inbound_pan
+                        read_only: false
+                      - type: multimedia
+                        code: gpspandocupload_x72std1aw
+                        required: true
+                        hint: PAN Doc Upload
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                            - application/msword
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: text
+                        code: tannumber_kouqq9d60b
+                        hint: TAN Number
+                        required: false
+                        parent_code: null
+                        read_only: false
+                      - type: multimedia
+                        code: gpstandocupload_k4lnh7gmv
+                        required: false
+                        hint: TAN Doc Upload
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                            - application/msword
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: sifg
+                        code: sifg_gpsdoyouhaveags_3w4qgbl4h
+                        required: true
+                        hint: Do you have a GSTIN?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: gpsdoyouhaveags_3w4qgbl4h
+                            hint: Do you have a GSTIN?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            'yes':
+                              - type: text
+                                code: gpsrestaurantgs_nsvvyvc1ri
+                                hint: Restaurant GSTIN
+                                required: true
+                                parent_code: null
+                                oif_options:
+                                  url: /swiggy/validateGstin
+                                  params:
+                                    - code: gstin
+                                      name: gpsrestaurantgs_nsvvyvc1ri
+                                read_only: false
+                              - type: multimedia
+                                code: gpsgstcertifica_8rqi52vub1
+                                required: true
+                                hint: GST Certificate Upload
+                                parent_code: null
+                                multimedia_options:
+                                  media_type: document
+                                  mime_types:
+                                    - application/pdf
+                                    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                                    - application/msword
+                                  access:
+                                    - local_storage
+                                  min_files: 1
+                                  max_files: 10
+                                oif_options: null
+                                read_only: false
+                              - type: text
+                                code: businessentityn_utmnwm97n
+                                hint: Business Entity Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: businessentityt_7s6pqwgtor
+                                hint: Business Entity Type
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: date
+                                code: registrationdat_afe36ve4a
+                                hint: Registration Date
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: restauranttrade_en048cp8f
+                                hint: Restaurant / Trade Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                            'no':
+                              - type: text
+                                code: businessentityn_utmnwm97n
+                                hint: Business Entity Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: businessentityt_pbf4zt3fa
+                                hint: Business Entity Type
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: businessentitya_t19l78r2j
+                                hint: Business Entity Address
+                                required: true
+                                parent_code: null
+                                read_only: false
+                        oif_options: null
+                        read_only: false
+                      - type: state_update_button
+                        code: p42fch06vq
+                        value: Proceed
+                        url: /onboarding/swiggy
                 GST updated:
                   value:
                     result: success
                     meta:
-                      progress_bar_code: p42fch06vq
+                      clear: all
                     inputs:
-                      - type: swiggy_welcome_screen
-                      - type: label
-                        code: new_inbound_header
-                        value: Please fill the following details
-                        read_only: false
-                        meta:
-                          style:
-                            type: heading
-                            background_color: x00000000
-                            hidden: false
-                      - type: text
-                        code: name
-                        hint: Name
-                        required: true
+                      - type: number
+                        code: enterotp_2bmxr2afj
+                        hint: Enter OTP
+                        required: false
                         parent_code: null
-                        tags:
-                          - name
-                          - name
-                        read_only: false
-                      - type: dropdown
-                        code: city
-                        hint: City
-                      - type: text
-                        code: owner_phone
-                        hint: Enter Owner Number
-                        required: true
-                        parent_code: null
-                        oif_options:
-                          url: /swiggy/sendOtp
-                          params:
-                            - code: phone
-                              name: owner_phone
-                            - code: rest_name
-                              name: name
-                        read_only: false
-                      - type: text
-                        code: verify_owner_otp
-                        hint: Verify Owner Number OTP
-                        required: true
-                        parent_code: null
-                        oif_options:
-                          url: /swiggy/validateOtp
-                          params:
-                            - code: owner_phone
-                              name: owner_phone
-                            - code: otp_info
-                              name: otp_info
-                            - code: otp
-                              name: verify_owner_otp
                         read_only: false
                       - type: state_update_button
-                        code: inbound_leads_new
+                        code: f7we8sgs7
                         value: Proceed
                         url: /onboarding/swiggy/upsert
-                    editable_fields:
-                      - name
+                    editable_fields: []
+                E-Sign Updated:
+                  value:
+                    result: success
+                    meta:
+                      clear: all
+                      progress_bar_code: p42fch06vq
+                    inputs:
+                      - type: text
+                        code: ifsccode_0kptwmtec
+                        hint: IFSC Code
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validateIfsc
+                          params:
+                            - code: ifsc
+                              name: ifsccode_0kptwmtec
+                            - code: bankacc_no
+                              name: bankaccountnumb_q697vrwx9
+                        read_only: false
+                      - type: text
+                        code: bank_accno_inbound
+                        hint: Enter Account Number
+                        required: true
+                        parent_code: null
+                        oif_options:
+                          url: /swiggy/validateBankAcc
+                          params:
+                            - code: bankacc_no
+                              name: bank_accno_inbound
+                            - code: ifsc
+                              name: ifsccode_0kptwmtec
+                        read_only: false
+                      - type: text
+                        code: beneficiaryname_6zilritl4k
+                        hint: Beneficiary Name
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: text
+                        code: bankname_qyzj92mp2m
+                        hint: Bank Name
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: text
+                        code: bankbranch_ygrhj24zb
+                        hint: Bank Branch
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: text
+                        code: bankcity_2r9n1r616nb
+                        hint: Bank City
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: text
+                        code: bankstate_juvr9so2b9
+                        hint: Bank State
+                        required: true
+                        parent_code: null
+                        read_only: false
+                      - type: multimedia
+                        code: uploadcancelled_x86t8ml2x
+                        required: true
+                        hint: Upload Cancelled Cheque/Bank Passbook first page/ Bank Statement with bank details
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                            - application/msword
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: multimedia
+                        code: uploadkycdocume_36iw2d0xz4
+                        required: true
+                        hint: 'Upload KYC Document Aadhar Card, Driving License, Passport in PDF/JPG/JPEG/PNG'
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/msword
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: state_update_button
+                        code: 91gl66d8kg
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+                    editable_fields: []
+                Bank-Details Updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: f7we8sgs7
+                    inputs:
+                      - type: swiggy_packaging_details_item_level
+                        code: swiggy_packaging_details_items
+                        read_only: 'false'
+                        value:
+                          items:
+                            - name: Rice
+                              price: 100
+                              packaging: 20
+                              image:
+                                media_type: jpeg
+                                items:
+                                  - bucket: vymo-uploads
+                                    filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                                    size: '300409'
+                                    mime: application/jpeg
+                                    label: jpeg (1)
+                                    path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                                bucket: vymo-uploads
+                            - name: Jeera Rice
+                              price: 100
+                              packaging: 10
+                          table:
+                            - type: header
+                              col01: Item price (INR)
+                              col02: Maximum Charge
+                            - condition:
+                                slab:
+                                  - 0
+                                  - 50
+                                value: 5
+                            - type: value
+                              col01: 51 - 150
+                              col02: '7'
+                              condition:
+                                slab:
+                                  - 50
+                                  - 150
+                                value: 7
+                            - type: value
+                              col01: 151 - 300
+                              col02: '10'
+                              condition:
+                                slab:
+                                  - 150
+                                  - 300
+                                value: 10
+                            - type: value
+                              col01: 301 - 500
+                              col02: '15'
+                              condition:
+                                slab:
+                                  - 300
+                                  - 500
+                                value: 15
+                            - type: value
+                              col01: 501 and above
+                              col02: '20'
+                              condition:
+                                slab:
+                                  - 500
+                                  - 10000000
+                                value: 20
+                      - type: array_input_field
+                        read_only: false
+                        code: mrp_items
+                        hint: List the items
+                        iterator: true
+                        array_options:
+                          inputs:
+                            - type: text
+                              code: item_name
+                              hint: Item
+                              required: true
+                              parent_code: null
+                      - type: state_update_button
+                        code: vb55f2sakb
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+                    editable_fields: []
+                Packaging-Details updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: f7we8sgs7
+                    inputs:
+                      - type: sifg
+                        code: sifg_whatisthetypeof_8x1szmv3et
+                        required: false
+                        hint: What is the type of your cuisine?
+                        parent_code: null
+                        value: null
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: whatisthetypeof_8x1szmv3et
+                            hint: What is the type of your cuisine?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: option_1
+                                name: Option 1
+                              - code: option_2
+                                name: Option 2
+                            required: false
+                          inputs: {}
+                        oif_options: null
+                        read_only: false
+                      - type: number
+                        code: whatisthecostfo_sa4nhirdjg
+                        hint: What is the cost for two?
+                        required: false
+                        max_chars: 4
+                        parent_code: null
+                        read_only: false
+                      - type: sifg
+                        code: sifg_isyourrestauran_b1d4lvu36k
+                        required: true
+                        hint: Is your restaurant pure Vegetarian?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: isyourrestauran_b1d4lvu36k
+                            hint: Is your restaurant pure Vegetarian?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs: {}
+                        oif_options: null
+                        read_only: false
+                      - type: multimedia
+                        code: uploadyourmenu_vry5t4tk3
+                        required: true
+                        hint: 'Upload your Menu '
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                            - application/msword
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: multimedia
+                        code: uploadyourtakea_ltzl5fzgar
+                        required: true
+                        hint: Upload your Take Away Bill
+                        parent_code: null
+                        multimedia_options:
+                          media_type: document
+                          mime_types:
+                            - application/pdf
+                            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                            - application/msword
+                          access:
+                            - local_storage
+                          min_files: 1
+                          max_files: 10
+                        oif_options: null
+                        read_only: false
+                      - type: state_update_button
+                        code: l5oeykpz5k
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+                    editable_fields: []
+                Menu-Details updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: f7we8sgs7
+                    inputs:
+                      - type: swiggy_operational_hours
+                        code: swiggy_operational_hours_data
+                        read_only: false
+                        value:
+                          type: all
+                          mon:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          tue:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          wed:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          thu:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          fri:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          sat:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                          sun:
+                            - start: '1000'
+                              end: '1600'
+                            - start: '1800'
+                              end: '2300'
+                      - type: state_update_button
+                        code: mmkqlutq38
+                        value: Proceed
+                        url: /onboarding/swiggy/upsert
+                    editable_fields: []
+                Operational Hours updated:
+                  value:
+                    result: success
+                    meta:
+                      progress_bar_code: mmkqlutq38
+                    inputs: []
+                    editable_fields: []
       tags:
         - 01 API
       description: The same API call with different body is sent to update the lead to a particular state. The API is in sync with the current lead upadte on identifier
@@ -1200,7 +1657,108 @@ paths:
                       - Others
                     customremarks_x2hjy23ood: Some remarks
               Location update:
-                value: {}
+                value:
+                  toState: rkoh733z9q
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: acceptable
+              GST-PAN update:
+                value:
+                  toState: p42fch06vq
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: acceptable
+              E-Sign update:
+                value:
+                  toState: f7we8sgs7
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    enterotp_2bmxr2afj: '123456'
+              Bank-Details Update:
+                value:
+                  toState: 91gl66d8kg
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: acceptable
+              Packaging-Details update:
+                value:
+                  toState: vb55f2sakb
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    swiggy_packaging_details_items:
+                      - name: Rice
+                        price: 100
+                        packaging: 20
+                        image: '<s3url>'
+                      - name: Jeera Rice
+                        price: 100
+                        packaging: 10
+                    mrp_items:
+                      - item_name: Coke
+                      - item_name: Pepsi
+                      - item_name: Diet Coke
+              Menu-Details update:
+                value:
+                  toState: l5oeykpz5k
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    sifg_commissionaccep_m621ytkcy: acceptable
+              Operational Hours update:
+                value:
+                  toState: mmkqlutq38
+                  identifier:
+                    - code: code
+                      value: lxft12as
+                  data:
+                    swiggy_operational_hours_data:
+                      type: all
+                      mon:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      tue:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      wed:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      thu:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      fri:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      sat:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
+                      sun:
+                        - start: '1000'
+                          end: '1600'
+                        - start: '1800'
+                          end: '2300'
     parameters: []
 components:
   securitySchemes:
