@@ -94,10 +94,10 @@ paths:
                         code: city
                         hint: City
                         code_name_spinner_options:
-                          - code: zhejiang
-                            name: Zhejiang
-                          - code: jiangsu
-                            name: Jiangsu
+                          - code: blr
+                            name: Bengaluru
+                          - code: hyd
+                            name: Hyderabad
                         oif_options:
                           url: /swiggy/sendOtp
                           params:
