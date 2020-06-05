@@ -79,7 +79,7 @@ paths:
                         meta:
                           style:
                             type: heading
-                            background_color: x00000000
+                            background_color: '#060606'
                             hidden: false
                       - type: text
                         code: name
@@ -90,7 +90,7 @@ paths:
                           - name
                           - name
                         read_only: false
-                      - type: dropdown
+                      - type: code_name_spinner
                         code: city
                         hint: City
                         oif_options:
