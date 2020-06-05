@@ -64,7 +64,7 @@ paths:
                             first_field: restaurantaddre_oh2hhfv348
                             end_field:
                               - sifg_whatisyourprefe_xcomh99ll
-                              - asdasdasd
+                              - new_fields
                               - soem_other_field
                             code: mhbpo296q
                           - name: Location Details
@@ -93,6 +93,11 @@ paths:
                       - type: code_name_spinner
                         code: city
                         hint: City
+                        code_name_spinner_options:
+                          - code: zhejiang
+                            name: Zhejiang
+                          - code: jiangsu
+                            name: Jiangsu
                         oif_options:
                           url: /swiggy/sendOtp
                           params:
