@@ -93,6 +93,13 @@ paths:
                       - type: dropdown
                         code: city
                         hint: City
+                        oif_options:
+                          url: /swiggy/sendOtp
+                          params:
+                            - code: phone
+                              name: owner_phone
+                            - code: rest_name
+                              name: name
                       - type: text
                         code: owner_phone
                         hint: Enter Owner Number
