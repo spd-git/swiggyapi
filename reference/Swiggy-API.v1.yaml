@@ -149,6 +149,35 @@ paths:
                             error: Incorrect OTP
                             success: Phone Validated
                         read_only: false
+                      - type: sifg
+                        code: sifg_doyouoperate2or_xhegnpa4s8q
+                        required: true
+                        hint: Do you operate 2 or more kitchens in one location?
+                        parent_code: null
+                        value: null
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouoperate2or_xhegnpa4s8q
+                            hint: Do you operate 2 or more kitchens in one location?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs: {}
+                        meta:
+                          style:
+                            type: switch
+                            defalut: 'yes'
+                        oif_options: null
+                        read_only: false
                       - type: state_update_button
                         code: inbound_leads_new
                         value: Proceed
