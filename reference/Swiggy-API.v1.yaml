@@ -197,7 +197,7 @@ paths:
                         meta:
                           style:
                             type: switch
-                            defalut: 'yes'
+                            default: 'yes'
                         oif_options: null
                         read_only: false
                       - type: state_update_button
