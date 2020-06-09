@@ -171,7 +171,29 @@ paths:
                                 name: 'No'
                                 order: 4
                             required: true
-                          inputs: {}
+                          inputs:
+                            'yes':
+                              - type: text
+                                code: ppaownername_9i9mmxzhga
+                                hint: Owner Name
+                                required: true
+                                parent_code: null
+                                read_only: false
+                              - type: number
+                                code: ppaownernumber_2rkdcfc3im
+                                hint: Owner Number
+                                required: true
+                                min_chars: 10
+                                max_chars: 10
+                                parent_code: null
+                                read_only: false
+                            'no':
+                              - type: text
+                                code: ppaowneremail_3rtukhgjw
+                                hint: Owner Email
+                                required: true
+                                parent_code: null
+                                read_only: false
                         meta:
                           style:
                             type: switch
