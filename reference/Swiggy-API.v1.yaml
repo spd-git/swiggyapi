@@ -1825,7 +1825,7 @@ paths:
     parameters: []
 components:
   securitySchemes:
-    bearerAuth:
+    Authorization:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -2837,3 +2837,20 @@ components:
           type: string
         progress_bar_config:
           $ref: '#/components/schemas/generic_progress_bar'
+    jwt_schema:
+      title: jwt_schema
+      type: object
+      x-examples:
+        For partner:
+          type: external
+          lead_id: aqhppa23
+      properties:
+        user:
+          type: string
+        type:
+          type: string
+        lead_id:
+          type: string
+      required:
+        - type
+        - lead_id
