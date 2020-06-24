@@ -1147,6 +1147,15 @@ paths:
                     meta:
                       clear: all
                       progress_bar_code: rkoh733z9q
+                      progress_bar_config:
+                        progress:
+                          - name: GST/PAN Details
+                            first_field: inbound_pan
+                            code: p42fch06vq
+                          - name: E-Sign
+                            code: f7we8sgs7
+                          - name: Onboarding
+                            code: mmkqlutq38
                     inputs:
                       - type: text
                         code: inbound_pan
