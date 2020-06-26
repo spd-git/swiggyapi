@@ -39,7 +39,10 @@ paths:
       operationId: getDefaultForm
       responses:
         '200':
-          description: Success with existing forms
+          description: |-
+            Success with existing forms
+
+            **Note**: `token` key will NOT be sent here
           content:
             application/json:
               schema:
@@ -763,6 +766,9 @@ paths:
                               city: Bangalore
                               last_updated_date: '05 Apr 2020, 6:00 PM'
                               status: Onboarding Pending
+                        meta:
+                          link:
+                            url: /onboarding/swiggy/create
         '501':
           description: Invalid OTP
           content:
@@ -1713,6 +1719,11 @@ paths:
                   identifier:
                     - code: code
                       value: lxft12as
+                  inputs:
+                    - code: sifg_commissionaccep_m621ytkcy
+                      name: '<hint>'
+                      type: code_name_spinner
+                      value: acceptable
                   data:
                     sifg_commissionaccep_m621ytkcy: acceptable
               Commission update - Declined:
@@ -1926,6 +1937,10 @@ components:
             - success
             - failure
           description: The result as success or failure of the API call
+        token:
+          type: string
+          description: updated JWT token with new expiration time
+          example: enfsdjf=.ksldjbalreredajnfwedf=.anldnfbladbf=
         identifier:
           type: object
           description: Keys to uniquely identify the Form - code/ref_if
@@ -1944,6 +1959,7 @@ components:
             type: string
       required:
         - result
+        - token
     swiggy_form_list:
       title: 01 Swiggy Form List
       description: 'Exisiting filled form by User. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415457298>) under **Existing forms for the number**'
@@ -1976,6 +1992,8 @@ components:
               last_updated_date: '05 Apr 2020, 6:00 PM'
               status: Onboarding Pending
               url: /onboarding/swiggy/getform/10004404
+      x-tags:
+        - Custom Input Fields
       properties:
         type:
           type: string
@@ -2020,10 +2038,23 @@ components:
               - last_updated_date
               - status
               - url
+        meta:
+          type: object
+          required:
+            - link
+          properties:
+            link:
+              type: object
+              required:
+                - url
+              example: /onboarding/swiggy/create
+              properties:
+                url:
+                  type: string
+                  example: /onboarding/swiggy/create
       required:
         - type
-      x-tags:
-        - Custom Input Fields
+        - meta
     swiggy_operational_hours:
       title: 03 Swiggy Operational Hours
       description: 'Operation hours of the restaurant. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413950286) under **Operational Hours**'
@@ -2853,13 +2884,22 @@ components:
         For partner:
           type: external
           lead_id: aqhppa23
+        example-2: {}
       properties:
         user:
           type: string
         type:
           type: string
+          enum:
+            - partner
         lead_id:
           type: string
+        expiration_time:
+          type: string
+        client:
+          type: string
+        phone:
+          type: string
       required:
-        - type
-        - lead_id
+        - expiration_time
+        - client
