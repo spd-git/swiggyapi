@@ -2903,3 +2903,9 @@ components:
       required:
         - expiration_time
         - client
+      description: |-
+        - jwt_token create with 30 min validity on first OTP [OIF call before API 03] (no lead_id, only with owner_no) **This will be in response.token**
+        - jwt_token create with 30 min validity on create of lead [API 03 if created NOT on list] (with lead_id) **This will be in response.token**
+        - jwt_token create with 30 min validity on fetch of lead [API 02] (with lead_id) **This will be in response.token**
+        - jwt_token modify with 30 min validity on fetch of lead [API 04] (with lead_id) **This will be in response.token**
+        - jwt_token create with 100 year validity on email of magic link (with lead_id). **This will be in params.token**
