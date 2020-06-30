@@ -2785,6 +2785,7 @@ components:
                   example: customremarks_x2hjy23ood
       x-tags:
         - Custom State as Input Field
+      description: 'Can be found here [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415456927>)'
     generic_progress_bar:
       title: Progress bar
       type: object
