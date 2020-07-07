@@ -561,7 +561,7 @@ paths:
         - 01 API
   /onboarding/swiggy/upsert:
     post:
-      summary: 03 Creates a new inbound lead with details or List existing forms
+      summary: 03 Create a new inbound lead with details or List existing forms
       operationId: getOrAddLead
       description: Returns 200 if a new lead is created or 201 if existing lads exists
       parameters:
@@ -2821,13 +2821,15 @@ components:
           type: commsion_state
           value: 'Please note 25% commission...'
           meta:
+            to_state: mhbpo296q
+            url: /external/swiggy/form/update
             show_fssai: I have FSSAI
             fssai_sifg: sifg_doyouhaveavalid_wcnpnu7m7w
             show_warning: You had declined the commission in the past
             inputs:
               acceptable: sifg_commissionaccep_m621ytkcy
               reasons: reasonsforcommi_npnn8imqj
-              remarks: customremarks_x2hjy23ood
+              remarks: inboundotherrea_m1zsmxi3pj
       x-tags:
         - Custom State as Input Field
       description: 'Can be found here [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415456927>)'
@@ -2842,6 +2844,14 @@ components:
         meta:
           type: object
           properties:
+            to_state:
+              type: string
+              description: State update to state
+              example: mhbpo296q
+            url:
+              type: string
+              description: update url endpoint to send post request to
+              example: /external/swiggy/form/update
             show_fssai:
               type: string
               description: Should show the content as label instead of `Decline`
