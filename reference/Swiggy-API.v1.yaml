@@ -23,7 +23,7 @@ info:
   contact:
     name: Sudeep Patil
     email: sudeep@getvymo.com
-  version: 0.0.6
+  version: 0.0.7
 servers:
   - url: 'https://swiggy.lms.getvymo.com'
     description: Production server
@@ -2047,7 +2047,6 @@ components:
               type: object
               required:
                 - url
-              example: /onboarding/swiggy/create
               properties:
                 url:
                   type: string
@@ -2408,6 +2407,7 @@ components:
       x-examples:
         Pre-poulated input field:
           type: swiggy_packaging_details_item_level
+          code: swiggy_packaging_details_item_level
           read_only: 'true'
           value:
             items:
@@ -2428,6 +2428,77 @@ components:
                 price: 100
                 packaging: 10
             table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
+        Storage in customdatas lead data:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            swiggy_packaging_details_item_level:
+              external_web_response:
+                items:
+                  - name: Rice
+                    price: 100
+                    packaging: 20
+                    image:
+                      media_type: jpeg
+                      items:
+                        - bucket: vymo-uploads
+                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                          size: '300409'
+                          mime: application/jpeg
+                          label: jpeg (1)
+                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      bucket: vymo-uploads
+                  - name: Jeera Rice
+                    price: 100
+                    packaging: 10
+                table: '<table_version_id>'
+        Storage in customdatas table only:
+          module: LEAD
+          type: packaging_details_table
+          data:
+            version: 1
+            updated_date: 123412343234234
+            external_web_response:
               - type: header
                 col01: Item price (INR)
                 col02: Maximum Charge
@@ -2750,12 +2821,16 @@ components:
           type: commsion_state
           value: 'Please note 25% commission...'
           meta:
-            show_fssai: true
-            show_warning: true
+            show_fssai: I have FSSAI
+            fssai_sifg: sifg_doyouhaveavalid_wcnpnu7m7w
+            show_warning: You had declined the commission in the past
             inputs:
               acceptable: sifg_commissionaccep_m621ytkcy
               reasons: reasonsforcommi_npnn8imqj
               remarks: customremarks_x2hjy23ood
+      x-tags:
+        - Custom State as Input Field
+      description: 'Can be found here [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415456927>)'
       properties:
         type:
           type: string
@@ -2768,9 +2843,19 @@ components:
           type: object
           properties:
             show_fssai:
-              type: boolean
+              type: string
+              description: Should show the content as label instead of `Decline`
+              example: I have FSSAI
+            fssai_sifg:
+              type: string
+              example: sifg_doyouhaveavalid_wcnpnu7m7w
+              description: Required when `show_fssai` key exists
             show_warning:
-              type: boolean
+              type: string
+              description: |-
+                - Hide the `Decline` button
+                - Show a `warning` type label that with this string
+              example: You had declined the commission in the past
             inputs:
               type: object
               properties:
@@ -2783,9 +2868,6 @@ components:
                 remarks:
                   type: string
                   example: customremarks_x2hjy23ood
-      x-tags:
-        - Custom State as Input Field
-      description: 'Can be found here [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/415456927>)'
     generic_progress_bar:
       title: Progress bar
       type: object
@@ -2886,6 +2968,12 @@ components:
           type: external
           lead_id: aqhppa23
         example-2: {}
+      description: |-
+        - jwt_token create with 30 min validity on first OTP [OIF call before API 03] (no lead_id, only with owner_no) **This will be in response.token**
+        - jwt_token create with 30 min validity on create of lead [API 03 if created NOT on list] (with lead_id) **This will be in response.token**
+        - jwt_token create with 30 min validity on fetch of lead [API 02] (with lead_id) **This will be in response.token**
+        - jwt_token modify with 30 min validity on fetch of lead [API 04] (with lead_id) **This will be in response.token**
+        - jwt_token create with 100 year validity on email of magic link (with lead_id). **This will be in params.token**
       properties:
         user:
           type: string
@@ -2901,12 +2989,8 @@ components:
           type: string
         phone:
           type: string
+        email:
+          type: string
       required:
         - expiration_time
         - client
-      description: |-
-        - jwt_token create with 30 min validity on first OTP [OIF call before API 03] (no lead_id, only with owner_no) **This will be in response.token**
-        - jwt_token create with 30 min validity on create of lead [API 03 if created NOT on list] (with lead_id) **This will be in response.token**
-        - jwt_token create with 30 min validity on fetch of lead [API 02] (with lead_id) **This will be in response.token**
-        - jwt_token modify with 30 min validity on fetch of lead [API 04] (with lead_id) **This will be in response.token**
-        - jwt_token create with 100 year validity on email of magic link (with lead_id). **This will be in params.token**
