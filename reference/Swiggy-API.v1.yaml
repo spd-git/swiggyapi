@@ -1992,6 +1992,9 @@ components:
               last_updated_date: '05 Apr 2020, 6:00 PM'
               status: Onboarding Pending
               url: /onboarding/swiggy/getform/10004404
+          meta:
+            link:
+              url: /external/swiggy/form/create
       x-tags:
         - Custom Input Fields
       properties:
@@ -2311,7 +2314,8 @@ components:
       x-tags:
         - Custom Input Fields
     standard_array_input_field:
-      title: 02 Array Input Field items
+      deprecated: true
+      title: 02 Array Input Field items [Deprecated]
       description: 'MRP items on the menu can be used as an Array field. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **Please list the items**'
       type: object
       x-examples:
