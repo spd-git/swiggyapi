@@ -2061,6 +2061,8 @@ components:
       x-examples:
         Pre-poulated input field:
           type: swiggy_operational_hours
+          code: swiggy_operational_hours
+          name: Swiggy Operational Hours
           read_only: false
           value:
             type: all
@@ -2099,6 +2101,91 @@ components:
                 end: '1600'
               - start: '1800'
                 end: '2300'
+        Data in API:
+          type: swiggy_operational_hours
+          code: swiggy_operational_hours
+          name: Swiggy Operational Hours
+          value:
+            type: all
+            mon:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            tue:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            wed:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            thu:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            fri:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            sat:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+            sun:
+              - start: '1000'
+                end: '1600'
+              - start: '1800'
+                end: '2300'
+        Swiggy Operational Hours in Custom Data:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            swiggy_operational_hours:
+              type: swiggy_operational_hours
+              name: Swiggy Operational Hours
+              value:
+                type: all
+                mon:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                tue:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                wed:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                thu:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                fri:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sat:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sun:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
       properties:
         type:
           type: string
@@ -2230,10 +2317,9 @@ components:
       x-examples:
         Pre-poulated MRP input field:
           type: array_input_field
+          code: swiggy_operational_hours
+          name: Swiggy Operational Hours
           read_only: false
-          code: mrp_items
-          hint: List the items
-          iterator: true
           array_options:
             inputs:
               - type: text
@@ -2241,25 +2327,19 @@ components:
                 hint: Item
                 required: true
                 parent_code: null
-          values:
-            - type: text
-              code: item_name
-              hint: Item
-              required: true
-              parent_code: null
-              values: Coke
-            - type: text
-              code: item_name
-              hint: Item
-              required: true
-              parent_code: null
-              values: Pepsi
-            - type: text
-              code: item_name
-              hint: Item
-              required: true
-              parent_code: null
-              values: Diet Coke
+          value:
+            - - type: text
+                code: item_name
+                name: Item
+                value: Coke
+            - - type: text
+                code: item_name
+                name: Item
+                value: Pepsi
+            - - type: text
+                code: item_name
+                name: Item
+                value: Diet Coke
         Blank MRP input field:
           type: array_input_field
           read_only: false
@@ -2274,12 +2354,15 @@ components:
                 required: true
                 parent_code: null
         MRP Data in API:
-          mrp_items:
+          type: array_input_field
+          code: mrp_items
+          name: MRP Items
+          value:
             - item_name: Coke
             - item_name: Pepsi
             - item_name: Diet Coke
         Multiple Field Array:
-          type: array_iput_field
+          type: array_input_field
           read_only: false
           code: mrp_items
           hint: List the items
@@ -2400,6 +2483,78 @@ components:
             type: object
       required:
         - type
+    swiggy_array_input_field:
+      title: 05 Swiggy Array Input Field items
+      description: 'MRP items on the menu can be used as an Array field. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **Please list the items**'
+      type: object
+      x-examples:
+        Pre-poulated MRP input field:
+          type: swiggy_array_input_field
+          code: swiggy_operational_hours
+          name: Swiggy Operational Hours
+          read_only: false
+          hint: List the items
+          value:
+            - item_name: Coke
+            - item_name: Pepsi
+            - item_name: Diet Coke
+        Blank MRP input field:
+          type: swiggy_array_input_field
+          code: mrp_items
+          name: MRP Items
+          hint: List the items
+        MRP Data in API:
+          type: swiggy_array_input_field
+          code: mrp_items
+          name: MRP Items
+          value:
+            - item_name: Coke
+            - item_name: Pepsi
+            - item_name: Diet Coke
+      properties:
+        type:
+          type: string
+          description: The type of input field to be rendered
+          example: array_input_field
+        code:
+          type: string
+          description: The unique identifier of the input field
+          example: mrp_items
+        hint:
+          type: string
+          description: The common label for the input field
+          example: Please list the items
+        iterator:
+          type: boolean
+          description: To append number to each input field (only in the front end)
+          default: 'false'
+        read_only:
+          type: boolean
+          description: Is the field non-editable
+          default: 'false'
+        array_options:
+          type: object
+          description: List of all Item names
+          properties:
+            inputs:
+              type: array
+              minItems: 1
+              description: The array of inputs that need to be replicated everytime `add` is clicked
+              items:
+                type: object
+                description: Object of a standard input field
+          required:
+            - inputs
+        values:
+          type: array
+          minItems: 1
+          description: Only required for pre-population
+          items:
+            type: object
+      required:
+        - type
+      x-tags:
+        - Custom Input Fields
     swiggy_packaging_details_item_level:
       title: 02 Swiggy Item Level Packaging Details
       description: 'Item level packaging charge. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **What is your packaging charge**'
@@ -2408,7 +2563,71 @@ components:
         Pre-poulated input field:
           type: swiggy_packaging_details_item_level
           code: swiggy_packaging_details_item_level
+          name: Swiggy Item Level Packaging Details
           read_only: 'true'
+          value:
+            items:
+              - name: Rice
+                price: 100
+                packaging: 20
+                image:
+                  media_type: jpeg
+                  items:
+                    - bucket: vymo-uploads
+                      filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      size: '300409'
+                      mime: application/jpeg
+                      label: jpeg (1)
+                      path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                  bucket: vymo-uploads
+              - name: Jeera Rice
+                price: 100
+                packaging: 10
+            table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
+        Data in API:
+          type: swiggy_packaging_details_item_level
+          code: swiggy_packaging_details_item_level
+          name: Swiggy Item Level Packaging Details
           value:
             items:
               - name: Rice
@@ -2473,7 +2692,9 @@ components:
           code: '<lead.code>'
           data:
             swiggy_packaging_details_item_level:
-              external_web_response:
+              type: swiggy_packaging_details_item_level
+              name: Swiggy Item Level Packaging Details
+              value:
                 items:
                   - name: Rice
                     price: 100
@@ -2491,54 +2712,47 @@ components:
                   - name: Jeera Rice
                     price: 100
                     packaging: 10
-                table: '<table_version_id>'
-        Storage in customdatas table only:
-          module: LEAD
-          type: packaging_details_table
-          data:
-            version: 1
-            updated_date: 123412343234234
-            external_web_response:
-              - type: header
-                col01: Item price (INR)
-                col02: Maximum Charge
-              - condition:
-                  slab:
-                    - 0
-                    - 50
-                  value: 5
-              - type: value
-                col01: 51 - 150
-                col02: '7'
-                condition:
-                  slab:
-                    - 50
-                    - 150
-                  value: 7
-              - type: value
-                col01: 151 - 300
-                col02: '10'
-                condition:
-                  slab:
-                    - 150
-                    - 300
-                  value: 10
-              - type: value
-                col01: 301 - 500
-                col02: '15'
-                condition:
-                  slab:
-                    - 300
-                    - 500
-                  value: 15
-              - type: value
-                col01: 501 and above
-                col02: '20'
-                condition:
-                  slab:
-                    - 500
-                    - 10000000
-                  value: 20
+                table:
+                  - type: header
+                    col01: Item price (INR)
+                    col02: Maximum Charge
+                  - condition:
+                      slab:
+                        - 0
+                        - 50
+                      value: 5
+                  - type: value
+                    col01: 51 - 150
+                    col02: '7'
+                    condition:
+                      slab:
+                        - 50
+                        - 150
+                      value: 7
+                  - type: value
+                    col01: 151 - 300
+                    col02: '10'
+                    condition:
+                      slab:
+                        - 150
+                        - 300
+                      value: 10
+                  - type: value
+                    col01: 301 - 500
+                    col02: '15'
+                    condition:
+                      slab:
+                        - 300
+                        - 500
+                      value: 15
+                  - type: value
+                    col01: 501 and above
+                    col02: '20'
+                    condition:
+                      slab:
+                        - 500
+                        - 10000000
+                      value: 20
       properties:
         type:
           type: string
