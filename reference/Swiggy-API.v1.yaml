@@ -1967,6 +1967,7 @@ components:
       x-examples:
         form list part 1:
           type: swiggy_form_list
+          code: inbound_leads_new
           value:
             - ref_id: '10004401'
               name: Pizza Hut 1
@@ -1992,9 +1993,7 @@ components:
               last_updated_date: '05 Apr 2020, 6:00 PM'
               status: Onboarding Pending
               url: /onboarding/swiggy/getform/10004404
-          meta:
-            link:
-              url: /external/swiggy/form/create
+          url: /external/swiggy/form/create
       x-tags:
         - Custom Input Fields
       properties:
@@ -2041,22 +2040,12 @@ components:
               - last_updated_date
               - status
               - url
-        meta:
-          type: object
-          required:
-            - link
-          properties:
-            link:
-              type: object
-              required:
-                - url
-              properties:
-                url:
-                  type: string
-                  example: /onboarding/swiggy/create
+        url:
+          type: string
+          example: /onboarding/swiggy/create
       required:
         - type
-        - meta
+        - url
     swiggy_operational_hours:
       title: 03 Swiggy Operational Hours
       description: 'Operation hours of the restaurant. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413950286) under **Operational Hours**'
@@ -2315,7 +2304,7 @@ components:
         - Custom Input Fields
     standard_array_input_field:
       deprecated: true
-      title: 02 Array Input Field items [Deprecated]
+      title: '02 Array Input Field items [Deprecated]'
       description: 'MRP items on the menu can be used as an Array field. Usage of this input field can be seen [here](https://vymo.invisionapp.com/share/YZWNI8ATK8E#/screens/413948048) under **Please list the items**'
       type: object
       x-examples:
@@ -2515,6 +2504,14 @@ components:
             - item_name: Coke
             - item_name: Pepsi
             - item_name: Diet Coke
+        Swiggy Array Input Field in Custom Data:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            mrp_items:
+              - item_name: Coke
+              - item_name: Pepsi
+              - item_name: Diet Coke
       properties:
         type:
           type: string
