@@ -2178,6 +2178,116 @@ components:
                     end: '1600'
                   - start: '1800'
                     end: '2300'
+        Custom Data with All Swiggy Custom Inputs:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            mrp_items:
+              - item_name: Coke
+              - item_name: Pepsi
+              - item_name: Diet Coke
+            swiggy_operational_hours:
+              type: swiggy_operational_hours
+              name: Swiggy Operational Hours
+              value:
+                type: all
+                mon:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                tue:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                wed:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                thu:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                fri:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sat:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sun:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+            swiggy_packaging_details_item_level:
+              type: swiggy_packaging_details_item_level
+              name: Swiggy Item Level Packaging Details
+              value:
+                items:
+                  - name: Rice
+                    price: 100
+                    packaging: 20
+                    image:
+                      media_type: jpeg
+                      items:
+                        - bucket: vymo-uploads
+                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                          size: '300409'
+                          mime: application/jpeg
+                          label: jpeg (1)
+                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      bucket: vymo-uploads
+                  - name: Jeera Rice
+                    price: 100
+                    packaging: 10
+                table:
+                  - type: header
+                    col01: Item price (INR)
+                    col02: Maximum Charge
+                  - condition:
+                      slab:
+                        - 0
+                        - 50
+                      value: 5
+                  - type: value
+                    col01: 51 - 150
+                    col02: '7'
+                    condition:
+                      slab:
+                        - 50
+                        - 150
+                      value: 7
+                  - type: value
+                    col01: 151 - 300
+                    col02: '10'
+                    condition:
+                      slab:
+                        - 150
+                        - 300
+                      value: 10
+                  - type: value
+                    col01: 301 - 500
+                    col02: '15'
+                    condition:
+                      slab:
+                        - 300
+                        - 500
+                      value: 15
+                  - type: value
+                    col01: 501 and above
+                    col02: '20'
+                    condition:
+                      slab:
+                        - 500
+                        - 10000000
+                      value: 20
       properties:
         type:
           type: string
@@ -2512,6 +2622,116 @@ components:
               - item_name: Coke
               - item_name: Pepsi
               - item_name: Diet Coke
+        Custom Data with All Swiggy Custom Inputs:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            mrp_items:
+              - item_name: Coke
+              - item_name: Pepsi
+              - item_name: Diet Coke
+            swiggy_operational_hours:
+              type: swiggy_operational_hours
+              name: Swiggy Operational Hours
+              value:
+                type: all
+                mon:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                tue:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                wed:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                thu:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                fri:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sat:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sun:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+            swiggy_packaging_details_item_level:
+              type: swiggy_packaging_details_item_level
+              name: Swiggy Item Level Packaging Details
+              value:
+                items:
+                  - name: Rice
+                    price: 100
+                    packaging: 20
+                    image:
+                      media_type: jpeg
+                      items:
+                        - bucket: vymo-uploads
+                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                          size: '300409'
+                          mime: application/jpeg
+                          label: jpeg (1)
+                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      bucket: vymo-uploads
+                  - name: Jeera Rice
+                    price: 100
+                    packaging: 10
+                table:
+                  - type: header
+                    col01: Item price (INR)
+                    col02: Maximum Charge
+                  - condition:
+                      slab:
+                        - 0
+                        - 50
+                      value: 5
+                  - type: value
+                    col01: 51 - 150
+                    col02: '7'
+                    condition:
+                      slab:
+                        - 50
+                        - 150
+                      value: 7
+                  - type: value
+                    col01: 151 - 300
+                    col02: '10'
+                    condition:
+                      slab:
+                        - 150
+                        - 300
+                      value: 10
+                  - type: value
+                    col01: 301 - 500
+                    col02: '15'
+                    condition:
+                      slab:
+                        - 300
+                        - 500
+                      value: 15
+                  - type: value
+                    col01: 501 and above
+                    col02: '20'
+                    condition:
+                      slab:
+                        - 500
+                        - 10000000
+                      value: 20
       properties:
         type:
           type: string
@@ -2692,6 +2912,116 @@ components:
           type: inbound_supplemantary_data
           code: '<lead.code>'
           data:
+            swiggy_packaging_details_item_level:
+              type: swiggy_packaging_details_item_level
+              name: Swiggy Item Level Packaging Details
+              value:
+                items:
+                  - name: Rice
+                    price: 100
+                    packaging: 20
+                    image:
+                      media_type: jpeg
+                      items:
+                        - bucket: vymo-uploads
+                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                          size: '300409'
+                          mime: application/jpeg
+                          label: jpeg (1)
+                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      bucket: vymo-uploads
+                  - name: Jeera Rice
+                    price: 100
+                    packaging: 10
+                table:
+                  - type: header
+                    col01: Item price (INR)
+                    col02: Maximum Charge
+                  - condition:
+                      slab:
+                        - 0
+                        - 50
+                      value: 5
+                  - type: value
+                    col01: 51 - 150
+                    col02: '7'
+                    condition:
+                      slab:
+                        - 50
+                        - 150
+                      value: 7
+                  - type: value
+                    col01: 151 - 300
+                    col02: '10'
+                    condition:
+                      slab:
+                        - 150
+                        - 300
+                      value: 10
+                  - type: value
+                    col01: 301 - 500
+                    col02: '15'
+                    condition:
+                      slab:
+                        - 300
+                        - 500
+                      value: 15
+                  - type: value
+                    col01: 501 and above
+                    col02: '20'
+                    condition:
+                      slab:
+                        - 500
+                        - 10000000
+                      value: 20
+        Custom Data with All Swiggy Custom Inputs:
+          type: inbound_supplemantary_data
+          code: '<lead.code>'
+          data:
+            mrp_items:
+              - item_name: Coke
+              - item_name: Pepsi
+              - item_name: Diet Coke
+            swiggy_operational_hours:
+              type: swiggy_operational_hours
+              name: Swiggy Operational Hours
+              value:
+                type: all
+                mon:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                tue:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                wed:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                thu:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                fri:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sat:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
+                sun:
+                  - start: '1000'
+                    end: '1600'
+                  - start: '1800'
+                    end: '2300'
             swiggy_packaging_details_item_level:
               type: swiggy_packaging_details_item_level
               name: Swiggy Item Level Packaging Details
