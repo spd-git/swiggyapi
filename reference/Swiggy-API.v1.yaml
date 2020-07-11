@@ -2139,45 +2139,42 @@ components:
           code: '<lead.code>'
           data:
             swiggy_operational_hours:
-              type: swiggy_operational_hours
-              name: Swiggy Operational Hours
-              value:
-                type: all
-                mon:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                tue:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                wed:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                thu:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                fri:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sat:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sun:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
+              type: all
+              mon:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              tue:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              wed:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              thu:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              fri:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sat:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sun:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
         Custom Data with All Swiggy Custom Inputs:
           type: inbound_supplemantary_data
           code: '<lead.code>'
@@ -2187,107 +2184,101 @@ components:
               - item_name: Pepsi
               - item_name: Diet Coke
             swiggy_operational_hours:
-              type: swiggy_operational_hours
-              name: Swiggy Operational Hours
-              value:
-                type: all
-                mon:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                tue:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                wed:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                thu:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                fri:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sat:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sun:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-            swiggy_packaging_details_item_level:
-              type: swiggy_packaging_details_item_level
-              name: Swiggy Item Level Packaging Details
-              value:
-                items:
-                  - name: Rice
-                    price: 100
-                    packaging: 20
-                    image:
-                      media_type: jpeg
-                      items:
-                        - bucket: vymo-uploads
-                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                          size: '300409'
-                          mime: application/jpeg
-                          label: jpeg (1)
-                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                      bucket: vymo-uploads
-                  - name: Jeera Rice
-                    price: 100
-                    packaging: 10
-                table:
-                  - type: header
-                    col01: Item price (INR)
-                    col02: Maximum Charge
-                  - condition:
-                      slab:
-                        - 0
-                        - 50
-                      value: 5
-                  - type: value
-                    col01: 51 - 150
-                    col02: '7'
-                    condition:
-                      slab:
-                        - 50
-                        - 150
-                      value: 7
-                  - type: value
-                    col01: 151 - 300
-                    col02: '10'
-                    condition:
-                      slab:
-                        - 150
-                        - 300
-                      value: 10
-                  - type: value
-                    col01: 301 - 500
-                    col02: '15'
-                    condition:
-                      slab:
-                        - 300
-                        - 500
-                      value: 15
-                  - type: value
-                    col01: 501 and above
-                    col02: '20'
-                    condition:
-                      slab:
-                        - 500
-                        - 10000000
-                      value: 20
+              type: all
+              mon:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              tue:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              wed:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              thu:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              fri:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sat:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sun:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+          swiggy_packaging_details_item_level:
+            items:
+              - name: Rice
+                price: 100
+                packaging: 20
+                image:
+                  media_type: jpeg
+                  items:
+                    - bucket: vymo-uploads
+                      filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      size: '300409'
+                      mime: application/jpeg
+                      label: jpeg (1)
+                      path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                  bucket: vymo-uploads
+              - name: Jeera Rice
+                price: 100
+                packaging: 10
+            table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
       properties:
         type:
           type: string
@@ -2631,107 +2622,101 @@ components:
               - item_name: Pepsi
               - item_name: Diet Coke
             swiggy_operational_hours:
-              type: swiggy_operational_hours
-              name: Swiggy Operational Hours
-              value:
-                type: all
-                mon:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                tue:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                wed:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                thu:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                fri:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sat:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sun:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-            swiggy_packaging_details_item_level:
-              type: swiggy_packaging_details_item_level
-              name: Swiggy Item Level Packaging Details
-              value:
-                items:
-                  - name: Rice
-                    price: 100
-                    packaging: 20
-                    image:
-                      media_type: jpeg
-                      items:
-                        - bucket: vymo-uploads
-                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                          size: '300409'
-                          mime: application/jpeg
-                          label: jpeg (1)
-                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                      bucket: vymo-uploads
-                  - name: Jeera Rice
-                    price: 100
-                    packaging: 10
-                table:
-                  - type: header
-                    col01: Item price (INR)
-                    col02: Maximum Charge
-                  - condition:
-                      slab:
-                        - 0
-                        - 50
-                      value: 5
-                  - type: value
-                    col01: 51 - 150
-                    col02: '7'
-                    condition:
-                      slab:
-                        - 50
-                        - 150
-                      value: 7
-                  - type: value
-                    col01: 151 - 300
-                    col02: '10'
-                    condition:
-                      slab:
-                        - 150
-                        - 300
-                      value: 10
-                  - type: value
-                    col01: 301 - 500
-                    col02: '15'
-                    condition:
-                      slab:
-                        - 300
-                        - 500
-                      value: 15
-                  - type: value
-                    col01: 501 and above
-                    col02: '20'
-                    condition:
-                      slab:
-                        - 500
-                        - 10000000
-                      value: 20
+              type: all
+              mon:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              tue:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              wed:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              thu:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              fri:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sat:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sun:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+          swiggy_packaging_details_item_level:
+            items:
+              - name: Rice
+                price: 100
+                packaging: 20
+                image:
+                  media_type: jpeg
+                  items:
+                    - bucket: vymo-uploads
+                      filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      size: '300409'
+                      mime: application/jpeg
+                      label: jpeg (1)
+                      path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                  bucket: vymo-uploads
+              - name: Jeera Rice
+                price: 100
+                packaging: 10
+            table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
       properties:
         type:
           type: string
@@ -2983,107 +2968,101 @@ components:
               - item_name: Pepsi
               - item_name: Diet Coke
             swiggy_operational_hours:
-              type: swiggy_operational_hours
-              name: Swiggy Operational Hours
-              value:
-                type: all
-                mon:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                tue:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                wed:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                thu:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                fri:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sat:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-                sun:
-                  - start: '1000'
-                    end: '1600'
-                  - start: '1800'
-                    end: '2300'
-            swiggy_packaging_details_item_level:
-              type: swiggy_packaging_details_item_level
-              name: Swiggy Item Level Packaging Details
-              value:
-                items:
-                  - name: Rice
-                    price: 100
-                    packaging: 20
-                    image:
-                      media_type: jpeg
-                      items:
-                        - bucket: vymo-uploads
-                          filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                          size: '300409'
-                          mime: application/jpeg
-                          label: jpeg (1)
-                          path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
-                      bucket: vymo-uploads
-                  - name: Jeera Rice
-                    price: 100
-                    packaging: 10
-                table:
-                  - type: header
-                    col01: Item price (INR)
-                    col02: Maximum Charge
-                  - condition:
-                      slab:
-                        - 0
-                        - 50
-                      value: 5
-                  - type: value
-                    col01: 51 - 150
-                    col02: '7'
-                    condition:
-                      slab:
-                        - 50
-                        - 150
-                      value: 7
-                  - type: value
-                    col01: 151 - 300
-                    col02: '10'
-                    condition:
-                      slab:
-                        - 150
-                        - 300
-                      value: 10
-                  - type: value
-                    col01: 301 - 500
-                    col02: '15'
-                    condition:
-                      slab:
-                        - 300
-                        - 500
-                      value: 15
-                  - type: value
-                    col01: 501 and above
-                    col02: '20'
-                    condition:
-                      slab:
-                        - 500
-                        - 10000000
-                      value: 20
+              type: all
+              mon:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              tue:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              wed:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              thu:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              fri:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sat:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+              sun:
+                - start: '1000'
+                  end: '1600'
+                - start: '1800'
+                  end: '2300'
+          swiggy_packaging_details_item_level:
+            items:
+              - name: Rice
+                price: 100
+                packaging: 20
+                image:
+                  media_type: jpeg
+                  items:
+                    - bucket: vymo-uploads
+                      filename: 2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                      size: '300409'
+                      mime: application/jpeg
+                      label: jpeg (1)
+                      path: lms/swiggy/all/2020-05-19-10-06-51a2_zqq_ppe.jpeg
+                  bucket: vymo-uploads
+              - name: Jeera Rice
+                price: 100
+                packaging: 10
+            table:
+              - type: header
+                col01: Item price (INR)
+                col02: Maximum Charge
+              - condition:
+                  slab:
+                    - 0
+                    - 50
+                  value: 5
+              - type: value
+                col01: 51 - 150
+                col02: '7'
+                condition:
+                  slab:
+                    - 50
+                    - 150
+                  value: 7
+              - type: value
+                col01: 151 - 300
+                col02: '10'
+                condition:
+                  slab:
+                    - 150
+                    - 300
+                  value: 10
+              - type: value
+                col01: 301 - 500
+                col02: '15'
+                condition:
+                  slab:
+                    - 300
+                    - 500
+                  value: 15
+              - type: value
+                col01: 501 and above
+                col02: '20'
+                condition:
+                  slab:
+                    - 500
+                    - 10000000
+                  value: 20
       properties:
         type:
           type: string
@@ -3549,3 +3528,471 @@ components:
       required:
         - expiration_time
         - client
+    standard_external_form_config:
+      title: standard_external_form_config
+      type: object
+      x-examples:
+        WIP inbounds:
+          forms:
+            inbounds:
+              first_update_type: inbound_leads_new
+              default:
+                user: SU
+                form: {}
+              state_config:
+                __init:
+                  next_state: inbound_leads_new
+                inbound_leads_new:
+                  next_state: 3bh2sd2q1m
+                  url: /external/swiggy/form/create
+                  meta:
+                    progress_bar_config:
+                      progress:
+                        - name: Restaurant Details
+                          first_field: name
+                          code: inbound_leads_new
+                        - name: FSSAI Details
+                          first_field: sifg_doyouhaveavalid_wcnpnu7m7w
+                          code: 3bh2sd2q1m
+                        - name: Commision and Onboarding
+                          first_field: sifg_commissionaccep_m621ytkcy
+                          code: mhbpo296q
+                        - name: Owner/Manager Details
+                          first_field: restaurantaddre_oh2hhfv348
+                          end_field:
+                            - sifg_whatisyourprefe_xcomh99ll
+                            - asdasdasd
+                            - soem_other_field
+                          code: mhbpo296q
+                        - name: Location Details
+                          first_field: restaurantaddre_oh2hhfv348
+                          code: rkoh733z9q
+                  inputs:
+                    delete: []
+                    create:
+                      swiggy_welcome_screen:
+                        data:
+                          type: swiggy_welcome_screen
+                          code: swiggy_welcome_screen
+                        index: 0
+                      new_inbounds_label:
+                        data:
+                          type: label
+                          code: new_inbound_header
+                          value: Please fill the following details
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              hidden: false
+                            labels:
+                              heading: Please fill the following details
+                        index: 1
+                      city:
+                        data:
+                          type: dropdown
+                          code: city
+                          hint: City
+                        index: 3
+                    update:
+                      owner_phone:
+                        data:
+                          oif_options:
+                            url: /swiggy/sendUnauthOtp
+                            params:
+                              - code: phone
+                                name: owner_phone
+                              - code: rest_name
+                                name: name
+                          meta:
+                            link:
+                              oif: 'true'
+                              on_value_change: 'false'
+                              text: Generate OTP
+                              url: /swiggy/sendUnauthOtp
+                        index: 0
+                      verify_owner_otp:
+                        data:
+                          meta:
+                            link:
+                              oif: 'true'
+                              on_value_change: 'false'
+                              text: Verify OTP
+                              url: /swiggy/validateOtp
+                        index: 0
+                3bh2sd2q1m:
+                  next_state: mhbpo296q
+                  url: /external/swiggy/form/update
+                  meta: {}
+                  inputs:
+                    delete: []
+                    create: {}
+                    update:
+                      sifg_doyouhaveavalid_wcnpnu7m7w:
+                        data:
+                          meta:
+                            style:
+                              type: switch
+                              default: 'yes'
+                              occupy_full_form_width: true
+                        index: 0
+                      inbound_fssai_no:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              text: Validate Fssai
+                              url: /swiggy/validateFssai
+                qaxjoxaj06:
+                  next_state: mhbpo296q
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: 3bh2sd2q1m
+                  inputs:
+                    delete:
+                      - sifg_commissionaccep_m621ytkcy
+                    create: {}
+                    update: {}
+                mhbpo296q:
+                  next_state: rkoh733z9q
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: 3bh2sd2q1m
+                  inputs:
+                    delete:
+                      - sifg_commissionaccep_m621ytkcy
+                    create: {}
+                    update: {}
+                rkoh733z9q:
+                  next_state: p42fch06vq
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: mhbpo296q
+                  inputs:
+                    delete: []
+                    create: {}
+                    update:
+                      sifg_isownerandmanag_njnuq2q99k:
+                        data:
+                          meta:
+                            style:
+                              type: switch
+                              default: 'yes'
+                        index: 0
+                      sifg_ismanagerandown_994m3rob9p:
+                        data:
+                          meta:
+                            style:
+                              type: switch
+                              default: 'yes'
+                        index: 0
+                      restaurantaddre_oh2hhfv348:
+                        data:
+                          meta:
+                            prefill_fields:
+                              latitude: latitudeaddress_xjx3f95cf8
+                              longitude: longitudeaddres_eyqftacrq
+                              address: addressaddresss_o910jtpg1
+                              state: stateaddresssub_16g642eepi
+                              pincode: pincodeaddresss_0j1onqw51b
+                        index: 0
+                      pincodeaddresss_0j1onqw51b:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              text: Check State
+                              url: /swiggy/validateFssai
+                      latitudeaddress_xjx3f95cf8:
+                        data:
+                          read_only: true
+                        index: 0
+                      longitudeaddres_eyqftacrq:
+                        data:
+                          read_only: true
+                        index: 0
+                      ppainvoicingema_om0vdcxso:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_change_value: false
+                              text: Generate OTP
+                              url: /swiggy/sendEmailOtp
+                        index: 0
+                      ppamanagernumbe_zejnl913mf:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_change_value: false
+                              text: Generate OTP
+                              url: /swiggy/sendOtp
+                        index: 0
+                      enterotp_2bmxr2afj:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_change_value: false
+                              text: Verify OTP
+                              url: /swiggy/sendOtp
+                        index: 0
+                      invoice_email_otp:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_change_value: false
+                              text: Verify OTP
+                              url: /swiggy/validateEmailOtp
+                        index: 0
+                      postal_code:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_change_value: true
+                              text: Verify Postal Code
+                              url: swiggy/search-state-by-pin
+                        index: 0
+                p42fch06vq:
+                  next_state: f7we8sgs7
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: rkoh733z9q
+                  inputs:
+                    delete: []
+                    create:
+                      gst_label:
+                        data:
+                          type: label
+                          code: gst_label
+                          value: GST and PAN Details
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              background_color: ''
+                              hidden: false
+                        index: 0
+                      gst_info:
+                        data:
+                          type: label
+                          code: gstinInfo
+                          value: GSTIN is based on the location of the restaurant. Please insured you have registered for the state where restaurant is registered. We only accept regular GST
+                          read_only: false
+                          meta:
+                            style:
+                              type: info
+                              background_color: x00000000
+                              hidden: false
+                        index: -1
+                    update:
+                      sifg_gpsdoyouhaveags_3w4qgbl4h:
+                        data:
+                          meta:
+                            style:
+                              type: switch
+                              default: 'yes'
+                        index: 0
+                      gpsrestaurantgs_nsvvyvc1ri:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_value_change: false
+                              text: Click to verify GSTIN
+                              url: swiggy/validateGstin
+                      inbound_pan:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_value_change: false
+                              text: Click to verify PAN
+                              url: swiggy/validatePan
+                f7we8sgs7:
+                  next_state: 91gl66d8kg
+                  url: /external/swiggy/form/update
+                  meta:
+                    clear: all
+                91gl66d8kg:
+                  next_state: vb55f2sakb
+                  url: /external/swiggy/form/update
+                  meta:
+                    clear: all
+                    progress_bar_code: p42fch06vq
+                  inputs:
+                    delete: []
+                    create:
+                      bank_details_label:
+                        data:
+                          type: label
+                          code: bank_details_label
+                          value: Bank Details
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              background_color: ''
+                              hidden: false
+                        index: 0
+                    update:
+                      ifsccode_0kptwmtec:
+                        data:
+                          meta:
+                            link:
+                              oif: true
+                              on_value_change: false
+                              text: Click to verify IFSC Code
+                              url: /swiggy/validateBankAcc
+                vb55f2sakb:
+                  next_state: l5oeykpz5k
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: f7we8sgs7
+                  inputs:
+                    delete: []
+                    create:
+                      packaging_details:
+                        data:
+                          type: label
+                          code: packaging_details
+                          value: Packaging Details
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              background_color: ''
+                              hidden: false
+                            labels:
+                              subheading: Please note that item level charges apply on individual menu items and Order charges apply to one complete order
+                        index: 0
+                      mrp_items:
+                        data:
+                          type: swiggy_array_input_field
+                          code: mrp_items
+                          name: MRP Items
+                          hint: List the items
+                        index: 3
+                    update: {}
+                l5oeykpz5k:
+                  next_state: mmkqlutq38
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: f7we8sgs7
+                  inputs:
+                    delete: []
+                    create:
+                      menu_details:
+                        data:
+                          type: label
+                          code: menu_details
+                          value: Menu Details
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              background_color: ''
+                              hidden: false
+                        index: 0
+                    update: {}
+                mmkqlutq38:
+                  url: /external/swiggy/form/update
+                  meta:
+                    progress_bar_code: f7we8sgs7
+                  inputs:
+                    delete: []
+                    create:
+                      operational_hours:
+                        data:
+                          type: label
+                          code: operational_hours
+                          value: Operational Hours
+                          read_only: false
+                          meta:
+                            style:
+                              type: heading
+                              background_color: ''
+                              hidden: false
+                        index: 0
+                      mrp_items:
+                        data:
+                          type: swiggy_operational_hours
+                          code: swiggy_operational_hours
+                          name: Swiggy Operational Hours
+                          read_only: false
+                          hint: Operational Hours
+                        index: 1
+      properties:
+        modules:
+          type: object
+          properties:
+            '<module_name>':
+              type: object
+              properties:
+                state_config:
+                  type: object
+                  properties:
+                    '<state_code>':
+                      type: object
+                      properties:
+                        next_state:
+                          type: string
+                        url:
+                          type: string
+                        meta:
+                          type: object
+                        inputs:
+                          type: object
+                          properties:
+                            delete:
+                              type:
+                                - array
+                                - string
+                              items:
+                                type: string
+                                enum:
+                                  - all
+                            create:
+                              type: object
+                              properties:
+                                '<field_code>':
+                                  type: object
+                                  properties:
+                                    data:
+                                      type: object
+                            update:
+                              type: object
+                              properties:
+                                '<field_code>':
+                                  type: object
+                                  properties:
+                                    data:
+                                      type: object
+                        editable_fields:
+                          type: array
+                          items:
+                            type: string
+                    __init:
+                      type: object
+                      required:
+                        - next_state
+                      properties:
+                        next_state:
+                          type: string
+                          example: inbound_leads_new
+                  required:
+                    - __init
+                default:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      description: user_code against which the external form should be created with
+                    form:
+                      type: object
+                      description: To overrride a complete form
+                  required:
+                    - user
