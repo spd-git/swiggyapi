@@ -3529,10 +3529,10 @@ components:
         - expiration_time
         - client
     standard_external_form_config:
-      title: standard_external_form_config
+      title: Standard External Form Config in LMS
       type: object
       x-examples:
-        WIP inbounds:
+        Swiggy Inbounds form:
           forms:
             inbounds:
               first_update_type: inbound_leads_new
@@ -3925,12 +3925,19 @@ components:
                           read_only: false
                           hint: Operational Hours
                         index: 1
+        Swiggy Inbounds Document submission form:
+          forms:
+            inbounds_document_submission:
+              state_config:
+                __init:
+                  next_state: 1n3t8ahcac
       properties:
-        modules:
+        forms:
           type: object
           properties:
-            '<module_name>':
+            '<form_type>':
               type: object
+              description: A single module can have multiple forms against it.
               properties:
                 state_config:
                   type: object
@@ -3979,14 +3986,17 @@ components:
                       type: object
                       required:
                         - next_state
+                      description: Required key for the initial state
                       properties:
                         next_state:
                           type: string
                           example: inbound_leads_new
+                          description: Ideally the first state that should be rendered if default form not present
                   required:
                     - __init
                 default:
                   type: object
+                  description: default attributes of the form
                   properties:
                     user:
                       type: object
@@ -3996,3 +4006,9 @@ components:
                       description: To overrride a complete form
                   required:
                     - user
+                first_update_type:
+                  type: string
+                  description: |-
+                    - `first_update_type` of the module for which this form is created
+                    - incase of only viewing or updating, this key can be avoided but is good to have.
+      description: This is used for configuring the external forms.
