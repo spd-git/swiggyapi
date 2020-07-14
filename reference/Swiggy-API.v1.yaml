@@ -23,7 +23,7 @@ info:
   contact:
     name: Sudeep Patil
     email: sudeep@getvymo.com
-  version: 0.0.7
+  version: 0.0.8
 servers:
   - url: 'https://swiggy.lms.getvymo.com'
     description: Production server
@@ -32,7 +32,18 @@ servers:
   - url: 'http://localhost:3002'
     description: Local server
 paths:
-  /onboarding/swiggy/getform:
+  '/r/{client_id}/form/{form_type}':
+    parameters:
+      - schema:
+          type: string
+        name: client_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: form_type
+        in: path
+        required: true
     get:
       summary: 01 Get Default external form or Landing page.
       description: Optional extended description in Markdown.
@@ -209,19 +220,27 @@ paths:
                         url: /onboarding/swiggy/upsert
       tags:
         - 01 API
-  '/onboarding/swiggy/getform/{ref_id}':
+  '/r/{client_id}/form/{form_type}/{code}':
+    parameters:
+      - schema:
+          type: string
+        name: client_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: form_type
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: code
+        in: path
+        required: true
     get:
       summary: 02 Get an existing form based on reference ID
-      operationId: getFormByRefId
+      operationId: getFormByCode
       description: RefId is unique identifier alternate of leadId
-      parameters:
-        - name: ref_id
-          description: The Reference Id of the form.
-          in: path
-          required: true
-          schema:
-            type: integer
-            minLength: 8
       responses:
         '200':
           description: Successfully found existing inbound lead
@@ -554,10 +573,21 @@ paths:
                   reason: Authorization Failed
       tags:
         - 01 API
-  /onboarding/swiggy/upsert:
+  '/r/{client_id}/form/{form_type}/create':
+    parameters:
+      - schema:
+          type: string
+        name: client_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: form_type
+        in: path
+        required: true
     post:
       summary: 03 Create a new inbound lead with details or List existing forms
-      operationId: getOrAddLead
+      operationId: createLead
       description: Returns 200 if a new lead is created or 201 if existing lads exists
       parameters:
         - schema:
@@ -571,38 +601,34 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - toState
-                - data
-              properties:
-                toState:
-                  type: string
-                data:
-                  type: object
-                  required:
-                    - name
-                    - city
-                    - owner_phone
-                    - verify_owner_otp
-                  properties:
-                    name:
-                      type: string
-                    city:
-                      type: string
-                    owner_phone:
-                      type: string
-                    verify_owner_otp:
-                      type: string
+              $ref: '#/components/schemas/generic_state_update_request_body'
             examples:
               Test Data:
                 value:
                   toState: inbound_leads_new
-                  data:
-                    name: Test Restaurant
-                    city: Bangalore
-                    owner_phone: '9807654321'
-                    verify_owner_otp: '123456'
+                  identifier: {}
+                  inputs:
+                    - code: name
+                      name: Name
+                      type: text
+                      value: 'Test01 Rest0715001 '
+                    - code: city
+                      name: City
+                      type: text
+                      value: Bangalore
+                    - code: owner_phone
+                      name: Enter Owner Number
+                      type: text
+                      value: '9870715001'
+                    - code: verify_owner_otp
+                      name: Verify Owner Number OTP
+                      type: text
+                      value: '1234'
+                    - code: otp_info
+                      name: OTP Confirmation
+                      type: text
+                      value: 'OTP Sent Successfully for Owner No9870715001 with a reference,692329'
+                  edit: []
       responses:
         '200':
           description: Success with new lead creation
@@ -702,87 +728,7 @@ paths:
                     editable_fields:
                       - name
                     token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoicGFydG5lciIsImxlYWRfaWQiOiJrNlB3LWc5WWZYIiwiY2xpZW50Ijoic3dpZ2d5IiwiZXhwaXJhdGlvbl90aW1lIjoxNTk0NzU3MDU3Mjk0fQ.DxaD3_6bpbZaAEoVP2XHrL3PxTs_f5rmLSgnAjBIVIo
-                Existing Form Response:
-                  value:
-                    result: success
-                    inputs:
-                      - type: swiggy_form_list
-                        value:
-                          - ref_id: '10004401'
-                            name: Pizza Hut 1
-                            city: Bangalore
-                            last_updated_date: '20 Apr 2020, 6:00 PM'
-                            status: Submitted
-                            url: /onboarding/swiggy/getform/10004401
-                          - ref_id: '10004402'
-                            name: Pizza Hut 2
-                            city: Bangalore
-                            last_updated_date: '15 Apr 2020, 6:00 PM'
-                            status: Pending
-                            url: /onboarding/swiggy/getform/10004401
-                          - ref_id: '10004403'
-                            name: Pizza Hut 3
-                            city: Bangalore
-                            last_updated_date: '10 Apr 2020, 6:00 PM'
-                            status: Commision Rejected
-                            url: /onboarding/swiggy/getform/10004403
-                          - ref_id: '10004404'
-                            name: Pizza Hut 4
-                            city: Bangalore
-                            last_updated_date: '05 Apr 2020, 6:00 PM'
-                            status: Onboarding Pending
-                            url: /onboarding/swiggy/getform/10004404
           headers: {}
-        '201':
-          description: Success with existing forms created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    type: string
-                    description: The result as success or failure of the API call
-                    enum:
-                      - success
-                      - failure
-                  inputs:
-                    type: array
-                    minItems: 1
-                    maxItems: 1
-                    items:
-                      $ref: '#/components/schemas/swiggy_form_list'
-              examples:
-                Existing Form Return:
-                  value:
-                    result: success
-                    inputs:
-                      - type: swiggy_form_list
-                        value:
-                          form_list:
-                            - ref_id: '10004401'
-                              name: Pizza Hut 1
-                              city: Bangalore
-                              last_updated_date: '20 Apr 2020, 6:00 PM'
-                              status: Submitted
-                            - ref_id: '10004402'
-                              name: Pizza Hut 2
-                              city: Bangalore
-                              last_updated_date: '15 Apr 2020, 6:00 PM'
-                              status: Pending
-                            - ref_id: '10004403'
-                              name: Pizza Hut 3
-                              city: Bangalore
-                              last_updated_date: '10 Apr 2020, 6:00 PM'
-                              status: Commision Rejected
-                            - ref_id: '10004404'
-                              name: Pizza Hut 4
-                              city: Bangalore
-                              last_updated_date: '05 Apr 2020, 6:00 PM'
-                              status: Onboarding Pending
-                        meta:
-                          link:
-                            url: /onboarding/swiggy/create
         '501':
           description: Invalid OTP
           content:
@@ -794,10 +740,21 @@ paths:
                   reason: Invalid OTP
       tags:
         - 01 API
-  /swiggy/updatestate:
+  '/r/{client_id}/form/{form_type}/update':
+    parameters:
+      - schema:
+          type: string
+        name: client_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: form_type
+        in: path
+        required: true
     post:
       summary: 04 State Update based on identifier
-      operationId: upadteStateByIdentifier
+      operationId: updateLead
       parameters:
         - schema:
             type: string
@@ -838,8 +795,7 @@ paths:
                         code: mhbpo296q
                         value: Proceed mhbpo296q
                         url: /external/swiggy/form/update
-                    editable_fields:
-                      - name
+                    editable_fields: []
                     token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmF0aW9uX3RpbWUiOjE1OTQ3NTcxMDAwOTEsInR5cGUiOiJwYXJ0bmVyIiwibGVhZF9pZCI6Ims2UHctZzlZZlgiLCJjbGllbnQiOiJzd2lnZ3kifQ._8kKaBjXVjzaip7XgvoHPGnODUI8irxM3l8NrFem0BM
                 Commision updated:
                   value:
@@ -1717,6 +1673,38 @@ paths:
                   toState: 3bh2sd2q1m
                   identifier:
                     - code: code
+                      value: GouTaAoUQX
+                  inputs:
+                    - code: doyouhaveavalid_wcnpnu7m7w
+                      name: Do you Have a valid FSSAI Registration/License?
+                      type: code_name_spinner
+                      value: 'Yes'
+                    - code: fssaiexpirydate_rvu4juhzte
+                      name: FSSAI Expiration Date
+                      type: date
+                      value: '1658437382204'
+                    - code: inbound_fssai_no
+                      name: Enter FSSAI Register Number
+                      type: text
+                      value: '10013043000639'
+                    - code: fssai_licType
+                      name: FSSAI License Type
+                      type: text
+                      value: Central License
+                    - code: fssai_firmName
+                      name: FSSAI Firm Name
+                      type: text
+                      value: HERBALIFE INTERNATIONAL INDIA PVT LTD
+                    - code: fssai_address
+                      name: FSSAI Address
+                      type: text
+                      value: 'NO.14, COMMISSARIAT ROAD, BANGALORE - 560 025, District - Bangalore Urban, STATE - Karnataka'
+                  edit: []
+              FSSAI update - No:
+                value:
+                  toState: 3bh2sd2q1m
+                  identifier:
+                    - code: code
                       value: k6Pw-g9YfX
                   inputs:
                     - code: doyouhaveavalid_wcnpnu7m7w
@@ -1732,42 +1720,36 @@ paths:
                       type: date
                       value: '1657913691696'
                   edit: []
-              FSSAI update - No:
-                value:
-                  toState: 3bh2sd2q1m
-                  identifier:
-                    - code: code
-                      value: lxft12as
-                  data:
-                    doyouhaveavalid_wcnpnu7m7w: 'No'
-                    enteryourfssaia_7lz90xk4le: '12345678901234567'
-                    dateofapplicati_f0vhhqmtfh: '1589792641170'
               Commission update - Accepted:
                 value:
                   toState: mhbpo296q
                   identifier:
                     - code: code
-                      value: lxft12as
+                      value: k6Pw-g9YfX
                   inputs:
-                    - code: sifg_commissionaccep_m621ytkcy
-                      name: '<hint>'
+                    - code: commissionaccep_m621ytkcy
+                      name: Commission Acceptable
                       type: code_name_spinner
                       value: acceptable
-                  data:
-                    sifg_commissionaccep_m621ytkcy: acceptable
               Commission update - Declined:
                 value:
                   toState: mhbpo296q
                   identifier:
                     - code: code
-                      value: lxft12as
-                  data:
-                    sifg_commissionaccep_m621ytkcy: notacceptable
-                    reasonsforcommi_npnn8imqj:
-                      - Commission is High
-                      - On-boarding fee is high
-                      - Others
-                    customremarks_x2hjy23ood: Some remarks
+                      value: GouTaAoUQX
+                  inputs:
+                    - code: commissionaccep_m621ytkcy
+                      name: 'Commission '
+                      type: code_name_spinner
+                      value: Not Acceptable
+                    - code: reasonsforcommi_npnn8imqj
+                      name: Reasons for Commission Not Acceptable
+                      type: multi_select_auto_complete
+                      value: '[{"code":"commissionishigh","name":"Commission is High"},{"code":"Onboardingfeeishigh","name":"On-boarding fee is high"},{"code":"others","name":"Others"}]'
+                    - code: inboundotherrea_m1zsmxi3pj
+                      name: Others
+                      type: text
+                      value: Some test reason
               Location update:
                 value:
                   toState: rkoh733z9q
@@ -1871,9 +1853,235 @@ paths:
                           end: '1600'
                         - start: '1800'
                           end: '2300'
-    parameters: []
-  
-  
+  /onboarding/swiggy/upsert:
+    post:
+      summary: 05 Create a new inbound lead with details or List existing forms
+      operationId: swiggyGetOrAddLead
+      description: "Returns 200 if a new lead is created with response of the next state update available for the form or 201 if existing leads exists with a list of all exisiting leads.\n\nInternally it uses createLead API if there is no existing lead "
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          description: ''
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generic_state_update_request_body'
+            examples:
+              Test Data:
+                value:
+                  toState: inbound_leads_new
+                  identifier: {}
+                  inputs:
+                    - code: name
+                      name: Name
+                      type: text
+                      value: 'Test01 Rest0715001 '
+                    - code: city
+                      name: City
+                      type: text
+                      value: Bangalore
+                    - code: owner_phone
+                      name: Enter Owner Number
+                      type: text
+                      value: '9870715001'
+                    - code: verify_owner_otp
+                      name: Verify Owner Number OTP
+                      type: text
+                      value: '1234'
+                    - code: otp_info
+                      name: OTP Confirmation
+                      type: text
+                      value: 'OTP Sent Successfully for Owner No9870715001 with a reference,692329'
+                  edit: []
+      responses:
+        '200':
+          description: Success with new lead creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_form_response'
+              examples:
+                Lead Creation Response:
+                  value:
+                    result: success
+                    identifier:
+                      - code: code
+                        value: k6Pw-g9YfX
+                    meta: {}
+                    inputs:
+                      - type: sifg
+                        code: sifg_doyouhaveavalid_wcnpnu7m7w
+                        required: true
+                        hint: Do you Have a valid FSSAI Registration/License?
+                        parent_code: null
+                        value: select
+                        sifg_options:
+                          selection:
+                            type: code_name_spinner
+                            code: doyouhaveavalid_wcnpnu7m7w
+                            hint: Do you Have a valid FSSAI Registration/License?
+                            code_name_spinner_options:
+                              - code: none
+                                name: Select
+                                order: 0
+                              - code: 'yes'
+                                name: 'Yes'
+                                order: 3
+                              - code: 'no'
+                                name: 'No'
+                                order: 4
+                            required: true
+                          inputs:
+                            select: []
+                            option_2: []
+                            'yes':
+                              - type: date
+                                code: fssaiexpirydate_rvu4juhzte
+                                hint: FSSAI Expiration Date
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                              - type: text
+                                code: inbound_fssai_no
+                                hint: Enter FSSAI Register Number
+                                required: true
+                                parent_code: null
+                                oif_options:
+                                  url: /swiggy/validateFssai
+                                  params:
+                                    - code: fssai_no
+                                      name: inbound_fssai_no
+                                read_only: false
+                                meta:
+                                  link:
+                                    oif: true
+                                    text: Validate Fssai
+                                    url: /swiggy/validateFssai
+                            'no':
+                              - type: number
+                                code: enteryourfssaia_7lz90xk4le
+                                hint: 'Enter your FSSAI Acknowlegement number*'
+                                required: true
+                                min_chars: 17
+                                max_chars: 17
+                                parent_code: null
+                                read_only: false
+                              - type: date
+                                code: dateofapplicati_f0vhhqmtfh
+                                hint: Date of Application
+                                required: true
+                                show_day_month_year: DMY
+                                min_date: 0
+                                max_date: 0
+                                parent_code: null
+                                read_only: false
+                        oif_options: null
+                        read_only: false
+                        meta:
+                          style:
+                            type: switch
+                            default: 'yes'
+                            occupy_full_form_width: true
+                      - type: state_update_button
+                        code: 3bh2sd2q1m
+                        value: Proceed
+                        url: /external/swiggy/form/update
+                    editable_fields:
+                      - name
+                    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoicGFydG5lciIsImxlYWRfaWQiOiJrNlB3LWc5WWZYIiwiY2xpZW50Ijoic3dpZ2d5IiwiZXhwaXJhdGlvbl90aW1lIjoxNTk0NzU3MDU3Mjk0fQ.DxaD3_6bpbZaAEoVP2XHrL3PxTs_f5rmLSgnAjBIVIo
+                Existing Form Response:
+                  value:
+                    result: success
+                    inputs:
+                      - type: swiggy_form_list
+                        code: inbound_leads_new
+                        value:
+                          - ref_id: '55988951'
+                            code: k6Pw-g9YfX
+                            name: 'Test01 Rest0715001 '
+                            city: Bangalore
+                            last_updated_date: 'Jul 14 2020 7:35 PM'
+                            status: mhbpo296q
+                            url: /external/swiggy/form/55988951
+                          - ref_id: '80876943'
+                            code: GouTaAoUQX
+                            name: Test02 Rest0715001
+                            city: Mumbai
+                            last_updated_date: 'Jul 14 2020 9:08 PM'
+                            status: qaxjoxaj06
+                            url: /external/swiggy/form/80876943
+                        url: /external/swiggy/form/create
+                    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmF0aW9uX3RpbWUiOjE1OTQ3NjI4NjIwMzQsInR5cGUiOiJwYXJ0bmVyIiwiY2xpZW50Ijoic3dpZ2d5Iiwib3duZXJfcGhvbmUiOiI5ODcwNzE1MDAxIn0.lJJ_eXITSRf-pBiq1RVxAuGwTFp7Pd-kkbWptN5LdXo
+          headers: {}
+        '201':
+          description: Success with existing forms created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: The result as success or failure of the API call
+                    enum:
+                      - success
+                      - failure
+                  inputs:
+                    type: array
+                    minItems: 1
+                    maxItems: 1
+                    items:
+                      $ref: '#/components/schemas/swiggy_form_list'
+              examples:
+                Existing Form Return:
+                  value:
+                    result: success
+                    inputs:
+                      - type: swiggy_form_list
+                        value:
+                          form_list:
+                            - ref_id: '10004401'
+                              name: Pizza Hut 1
+                              city: Bangalore
+                              last_updated_date: '20 Apr 2020, 6:00 PM'
+                              status: Submitted
+                            - ref_id: '10004402'
+                              name: Pizza Hut 2
+                              city: Bangalore
+                              last_updated_date: '15 Apr 2020, 6:00 PM'
+                              status: Pending
+                            - ref_id: '10004403'
+                              name: Pizza Hut 3
+                              city: Bangalore
+                              last_updated_date: '10 Apr 2020, 6:00 PM'
+                              status: Commision Rejected
+                            - ref_id: '10004404'
+                              name: Pizza Hut 4
+                              city: Bangalore
+                              last_updated_date: '05 Apr 2020, 6:00 PM'
+                              status: Onboarding Pending
+                        meta:
+                          link:
+                            url: /onboarding/swiggy/create
+        '501':
+          description: Invalid OTP
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  result: failure
+                  reason: Invalid OTP
+      tags:
+        - 01 API
 components:
   securitySchemes:
     Authorization:
@@ -3397,7 +3605,7 @@ components:
         identifier:
           type: object
           description: The lead identifier which needs to be updated. This has to be unique
-        data:
+        inputs:
           type: object
           description: The state update fields for the input in state update
         edit:
@@ -3406,7 +3614,7 @@ components:
       required:
         - toState
         - identifier
-        - data
+        - inputs
     swiggy_commission_state_if:
       title: 01 Custom State Commission
       type: object
