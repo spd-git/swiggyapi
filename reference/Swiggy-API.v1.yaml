@@ -1855,7 +1855,7 @@ paths:
                           end: '2300'
   /onboarding/swiggy/upsert:
     post:
-      summary: 05 Create a new inbound lead with details or List existing forms
+      summary: '05 [SWIGGY] Create a new inbound lead with details or List existing forms'
       operationId: swiggyGetOrAddLead
       description: "Returns 200 if a new lead is created with response of the next state update available for the form or 201 if existing leads exists with a list of all exisiting leads.\n\nInternally it uses createLead API if there is no existing lead "
       parameters:
@@ -3773,13 +3773,19 @@ components:
         progress_bar_config:
           $ref: '#/components/schemas/generic_progress_bar'
     jwt_schema:
-      title: jwt_schema
+      title: JWT Claims Schema
       type: object
       x-examples:
-        For partner:
-          type: external
+        For phone auth by partner:
+          type: partner
+          phone: '7276510345'
+          client: swiggy
+          expiration_time: 1594761915216
+        For update by partner:
+          type: partner
           lead_id: aqhppa23
-        example-2: {}
+          client: swiggy
+          expiration_time: 1594761915216
       description: |-
         - jwt_token create with 30 min validity on first OTP [OIF call before API 03] (no lead_id, only with owner_no) **This will be in response.token**
         - jwt_token create with 30 min validity on create of lead [API 03 if created NOT on list] (with lead_id) **This will be in response.token**
