@@ -2232,6 +2232,8 @@ components:
           description: The list of existing input fields that are allowed to be updatable
           items:
             type: string
+        status:
+          type: number
       required:
         - result
     swiggy_form_list:
