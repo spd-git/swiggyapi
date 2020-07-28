@@ -3628,6 +3628,7 @@ components:
             to_state: mhbpo296q
             url: /external/swiggy/form/update
             show_fssai: I have FSSAI
+            fssai_url: /swiggy/getInputs
             fssai_sifg: sifg_doyouhaveavalid_wcnpnu7m7w
             show_warning: You had declined the commission in the past
             inputs:
@@ -3660,10 +3661,13 @@ components:
               type: string
               description: Should show the content as label instead of `Decline`
               example: I have FSSAI
+            fssai_url:
+              type: string
             fssai_sifg:
               type: string
               example: sifg_doyouhaveavalid_wcnpnu7m7w
               description: Required when `show_fssai` key exists
+              deprecated: true
             show_warning:
               type: string
               description: |-
